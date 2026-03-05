@@ -1,0 +1,8 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/GameModule/Toolkits/blue-btn.uss?fileID=7433441132597879392&amp;guid=a9555afb3221bdb4e9030c22646369ff&amp;type=3#blue-btn" />
+    <ui:VisualElement name="TopContainer" style="flex-grow: 0; background-color: rgb(151, 151, 151); flex-basis: 200px; flex-direction: row; justify-content: flex-start; align-items: center;">
+        <ui:Button text="Button" name="Button1" class="blue-btn" />
+        <ui:Button text="Button" class="blue-btn" />
+        <ui:Button text="Button" />
+    </ui:VisualElement>
+</ui:UXML>
