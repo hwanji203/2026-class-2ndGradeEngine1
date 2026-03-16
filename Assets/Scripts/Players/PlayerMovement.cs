@@ -1,8 +1,9 @@
+using GGMLib;
 using UnityEngine;
 
 namespace Players
 {
-    public class PlayerMovement : MonoBehaviour
+    public class PlayerMovement : MonoBehaviour, IModule, IControlMovement
     {
         [SerializeField] private float moveSpeed = 8f;
         [SerializeField] private float gravity = -9.8f;
@@ -10,6 +11,7 @@ namespace Players
         [SerializeField] private CharacterController controller;
         [SerializeField] private float rotationSpeed = 0.5f;
 
+        private ModuleOwner _owner;
         private Vector3 _velocity;
         private float _verticalVelocity;
         private Vector3 _movementDirection;
@@ -17,7 +19,7 @@ namespace Players
         public bool IsGround => controller.isGrounded;
         public Vector3 Velocity => _velocity;
 
-        public void SetMovementDirection(Vector2 inputDirection)
+        public void SetMovementDirection(Vector3 inputDirection)
         {
             _movementDirection = new Vector3(inputDirection.x, 0f, inputDirection.y);
         }
@@ -60,6 +62,11 @@ namespace Players
         private void MoveCharacter()
         {
             controller.Move(_velocity);
+        }
+
+        public void Initialize(ModuleOwner owner)
+        {
+            _owner = owner;
         }
     }
 }

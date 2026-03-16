@@ -1,26 +1,36 @@
+using Agents;
+using GGMLib;
 using UnityEngine;
 
 namespace Players
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : Agent
     {
         [SerializeField] private PlayerInputSO playerInput;
-        [SerializeField] private PlayerMovement movement;
+        private IControlMovement _movement;
 
-        private void Awake()
+        protected override void InitializeComponents()
         {
+            base.InitializeComponents();
+            _movement = GetModule<IControlMovement>();
+            Debug.Assert(_movement != null, "플레이어 이동 관련 모듈이 없음");
+        }
+
+        protected override void AfterInitComponents()
+        {
+            base.AfterInitComponents();
             playerInput.OnMovementChange += HandleMovementChange;
         }
 
         private void OnDestroy()
         {
-            playerInput.OnMovementChange -= HandleMovementChange;
+            if (playerInput != null)
+                playerInput.OnMovementChange -= HandleMovementChange;
         }
 
         private void HandleMovementChange(Vector2 inputDirection)
         {
-            movement.SetMovementDirection(inputDirection);
+            _movement.SetMovementDirection(inputDirection);
         }
     }
 }
-

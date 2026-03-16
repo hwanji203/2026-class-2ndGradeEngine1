@@ -10,7 +10,14 @@
             <ui:VisualElement name="Header" style="align-items: center; justify-content: space-evenly; margin-top: 15px; margin-right: 15px; margin-bottom: 15px; margin-left: 15px; flex-direction: row; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; flex-basis: 80px; -unity-font-style: bold;">
                 <ui:Label text="헤더입니다." style="flex-grow: 1; font-size: 25px; -unity-font-style: bold;" />
             </ui:VisualElement>
-            <ui:VisualElement name="Content" style="flex-grow: 1; border-top-width: 1px; border-right-width: 0; border-bottom-width: 1px; border-left-width: 0; border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0);" />
+            <ui:VisualElement name="Content" style="flex-grow: 1; border-top-width: 1px; border-right-width: 0; border-bottom-width: 1px; border-left-width: 0; border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0);">
+                <ui:VisualElement name="SelectBtns" style="flex-grow: 0; flex-basis: auto; flex-direction: row;">
+                    <ui:Button text="장비" name="ArmorBtn" class="blue-btn select-btn" />
+                    <ui:Button text="인벤토리" name="InvenBtn" class="blue-btn select-btn" style="height: 40px; width: 100px; border-bottom-right-radius: 0; border-bottom-left-radius: 0; border-top-left-radius: 9px; border-top-right-radius: 9px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;" />
+                    <ui:Button text="세팅" name="SettingBtn" class="blue-btn" style="height: 40px; width: 100px; border-bottom-right-radius: 0; border-bottom-left-radius: 0; border-top-left-radius: 9px; border-top-right-radius: 9px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="ContentVisual" style="flex-grow: 1; margin-top: 0; margin-right: 10px; margin-bottom: 0; margin-left: 10px;" />
+            </ui:VisualElement>
             <ui:VisualElement name="Footer" style="justify-content: center; align-items: flex-end; flex-basis: 80px;">
                 <ui:Button text="Button" name="CloseBtn" class="blue-btn" />
             </ui:VisualElement>

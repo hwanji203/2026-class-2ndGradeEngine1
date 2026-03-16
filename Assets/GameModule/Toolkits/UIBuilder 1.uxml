@@ -1,5 +1,5 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:VisualElement name="InnerImage" style="flex-grow: 1;">
-        <ui:Label text="장비 컨텐츠가 여기 들어갑니다." name="Label" style="-unity-font-style: bold; font-size: 17px; text-shadow: 2px 2px 0 rgba(0, 0, 0, 0); background-image: none; -unity-background-scale-mode: scale-and-crop; flex-grow: 1; background-color: rgb(157, 172, 224); color: rgb(255, 255, 255);" />
+        <ui:Label text="인벤토리 데이터가 여 들어갑니다." name="Label" style="-unity-font-style: bold; font-size: 17px; text-shadow: 2px 2px 0 rgba(0, 0, 0, 0); background-image: none; -unity-background-scale-mode: scale-and-crop; flex-grow: 1; background-color: rgb(157, 172, 224); color: rgb(255, 255, 255);" />
     </ui:VisualElement>
 </ui:UXML>
