@@ -1,10 +1,11 @@
+using Assets.Scripts.Agent;
 using GGMLib;
 using UnityEngine;
 
 namespace Agnets
 {
     [RequireComponent(typeof(Animator))]
-    public class AgentRenderer : MonoBehaviour, IModule
+    public class AgentRenderer : MonoBehaviour, IModule, IRenderer
     {
         public Animator Animator { get; private set; }
         private ModuleOwner _owner;
