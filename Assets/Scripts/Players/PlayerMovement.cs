@@ -1,4 +1,5 @@
-using GGMLib;
+using System;
+using GGMLib.ModuleSystem;
 using UnityEngine;
 
 namespace Players
@@ -7,21 +8,24 @@ namespace Players
     {
         [SerializeField] private float moveSpeed = 8f;
         [SerializeField] private float gravity = -9.8f;
-        [SerializeField] private Transform parentTrm;
         [SerializeField] private CharacterController controller;
-        [SerializeField] private float rotationSpeed = 0.5f;
 
-        private ModuleOwner _owner;
         private Vector3 _velocity;
         private float _verticalVelocity;
         private Vector3 _movementDirection;
+        private ModuleOwner _owner;
 
         public bool IsGround => controller.isGrounded;
         public Vector3 Velocity => _velocity;
-
-        public void SetMovementDirection(Vector3 inputDirection)
+        
+        public void Initialize(ModuleOwner owner)
         {
-            _movementDirection = new Vector3(inputDirection.x, 0f, inputDirection.y);
+            _owner = owner;
+        }
+        
+        public void SetMovementDirection(Vector2 inputDirection)
+        {
+            _movementDirection = new Vector3(inputDirection.x, 0, inputDirection.y);
         }
 
         private void FixedUpdate()
@@ -31,42 +35,34 @@ namespace Players
             MoveCharacter();
         }
 
-        private void CalculateMovement()
-        {
-            _velocity = Quaternion.Euler(0, -45f, 0) * _movementDirection;
-            _velocity *= moveSpeed * Time.fixedDeltaTime;
-
-            if (_velocity.sqrMagnitude > 0f)
-            {
-                Quaternion targetRotation = Quaternion.LookRotation(_velocity);
-                parentTrm.rotation = Quaternion.Lerp(parentTrm.rotation, targetRotation,
-                    Time.fixedDeltaTime * rotationSpeed);
-                //float t = 1 - Mathf.Exp(-rotationSpeed * Time.fixedDeltaTime);
-                //parentTrm.rotation = Quaternion.Lerp(parentTrm.rotation, targetRotation, t);
-            }
-        }
-
-        private void ApplyGravity()
-        {
-            if (IsGround && _verticalVelocity <= 0)
-            {
-                _verticalVelocity = -0.3f; //¾Æ·¡·Î ´ç±â´Â ÈûÀ» ÁØ´Ù.
-            }
-            else
-            {
-                _verticalVelocity += gravity * Time.fixedDeltaTime;
-            }
-            _velocity.y = _verticalVelocity; //Áß·Â Àû¿ëÇÑ ÈûÀ» °¡ÇÑ´Ù.
-        }
-
         private void MoveCharacter()
         {
             controller.Move(_velocity);
         }
 
-        public void Initialize(ModuleOwner owner)
+        private void ApplyGravity()
         {
-            _owner = owner;
+            if (IsGround && _verticalVelocity <= 0)// ë•…ì— ìžˆê³  ìˆ˜ì§ ì†ë ¥ì´ 0ë³´ë‹¤ ìž‘ìœ¼ë©´
+            {
+                _verticalVelocity = -0.3f; // ì•„ëž˜ë¡œ ë‹¹ê¸°ëŠ” íž˜ì„ ì¤€ë‹¤
+            }
+            else
+            {
+                _verticalVelocity += gravity * Time.fixedDeltaTime; // ì¤‘ë ¥ ì ìš©í•œ íž˜ì„ ê°€í•œë‹¤
+            }
+
+            _velocity.y = _verticalVelocity;
+        }
+
+        private void CalculateMovement()
+        {
+            _velocity = Quaternion.Euler(0, -45f, 0) * _movementDirection; // ì¿¼í„°ë·°
+            _velocity *= moveSpeed * Time.deltaTime;
+            if(_velocity.sqrMagnitude > 0f)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(_velocity);
+                _owner.transform.rotation = Quaternion.Lerp(_owner.transform.rotation, targetRotation, Time.deltaTime * 10);
+            }
         }
     }
 }

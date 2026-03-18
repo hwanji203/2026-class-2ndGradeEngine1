@@ -7,7 +7,6 @@ namespace Test
     public partial class DataButton : Button
     {
         [UxmlAttribute]
-        public int ButtonIndex { get; set; }
+        public int ButtonIndex { get; private set; }
     }
 }
-

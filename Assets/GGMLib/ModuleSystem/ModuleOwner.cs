@@ -3,31 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace GGMLib
+namespace GGMLib.ModuleSystem
 {
     public abstract class ModuleOwner : MonoBehaviour
     {
-        protected Dictionary<Type, IModule> _moduleDict;
+        private Dictionary<Type, IModule> _compos = new();
 
         protected virtual void Awake()
         {
-            _moduleDict = GetComponentsInChildren<IModule>().ToDictionary(module => module.GetType());
-
+            _compos = GetComponentsInChildren<IModule>().ToDictionary(compo => compo.GetType());
+            // Type 런타임 중 객체의 정보 저장
             InitializeComponents();
             AfterInitComponents();
         }
 
         protected virtual void InitializeComponents()
         {
-            foreach (var module in _moduleDict.Values)
+            foreach (IModule module in _compos.Values)
             {
                 module.Initialize(this);
             }
         }
-
         protected virtual void AfterInitComponents()
         {
-            foreach (var module in _moduleDict.Values.OfType<IAfterInitModule>())
+            foreach (IAfterInitModule module in _compos.Values.OfType<IAfterInitModule>())
             {
                 module.AfterInit();
             }
@@ -35,16 +34,13 @@ namespace GGMLib
 
         public T GetModule<T>()
         {
-            if (_moduleDict.TryGetValue(typeof(T), out IModule module))
+            if (_compos.TryGetValue(typeof(T), out var module))
                 return (T)module;
 
-            IModule findModule = _moduleDict.Values.FirstOrDefault(module => module is T);
-
-            if (findModule is T castedModlue)
-                return castedModlue;
-
+            IModule findedModule = _compos.Values.FirstOrDefault(moduleType => moduleType is T);
+            if (findedModule is T castedModule)
+                return castedModule;
             return default;
         }
     }
 }
-

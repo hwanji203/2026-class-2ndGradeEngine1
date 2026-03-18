@@ -1,6 +1,5 @@
 using Agents;
-using Assets.Scripts.Agent.FSM;
-using GGMLib;
+using Agents.FSM;
 using UnityEngine;
 
 namespace Players
@@ -9,29 +8,24 @@ namespace Players
     {
         [field: SerializeField] public PlayerInputSO PlayerInput { get; private set; }
         [SerializeField] private StateSO[] playerStates;
-
-        private IControlMovement _movement;
+        
+        private IControlMovement _movement; 
         private StateMachine _stateMachine;
-
         protected override void InitializeComponents()
         {
             base.InitializeComponents();
             _stateMachine = new StateMachine(this, playerStates);
-
-            _movement = GetModule<IControlMovement>();
-            Debug.Assert(_movement != null, "ÇÃ·¹ÀÌ¾î ÀÌµ¿ °ü·Ã ¸ðµâÀÌ ¾øÀ½");
         }
 
         private void Start()
         {
-            _stateMachine.ChangeState(0, transitionDuration: 0);
+            _stateMachine.ChangeState(0, transitionDuration: 0); // ê°€ë…ì„±ì„ ìœ„í•´ì„œ
         }
+
         private void Update()
         {
             _stateMachine.UpdateMachine();
         }
-
-        public void ChangeState(int newStateIndex, float transitionDuration)
-            => _stateMachine.ChangeState(newStateIndex, transitionDuration);
+        public void ChangeState(int newStateIndex, float transitionDuration) => _stateMachine.ChangeState(newStateIndex, transitionDuration);
     }
 }

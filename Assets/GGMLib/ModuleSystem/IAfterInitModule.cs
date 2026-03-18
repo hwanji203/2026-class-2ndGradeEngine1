@@ -1,8 +1,7 @@
-namespace GGMLib
+namespace GGMLib.ModuleSystem
 {
     public interface IAfterInitModule
     {
-        void AfterInit();
+        public void AfterInit();
     }
 }
-

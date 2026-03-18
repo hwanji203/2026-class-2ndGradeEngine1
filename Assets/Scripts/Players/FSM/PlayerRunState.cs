@@ -1,4 +1,5 @@
 using Agents;
+using Agents.FSM;
 using UnityEngine;
 
 namespace Players.FSM
@@ -12,21 +13,29 @@ namespace Players.FSM
         public override void Enter(float transitionDuration, int layerIndex = 0)
         {
             base.Enter(transitionDuration, layerIndex);
-            _player.PlayerInput.OnMovementChange += HandleMovementChange;
+            _player.PlayerInput.OnMovementChanged += HandleMovementChange;
         }
 
-        public override void Exit()
+        public override void Update()
         {
-            _player.PlayerInput.OnMovementChange -= HandleMovementChange;
-            base.Exit();
+            base.Update();
         }
 
         private void HandleMovementChange(Vector2 movementKey)
         {
-            if (movementKey.magnitude > INPUT_DEADZONE)
+            _controlMovement.SetMovementDirection(movementKey);
+            
+            if (movementKey.magnitude < INPUT_DEADZONE)
             {
-                _player.ChangeState(1, 0.1f); //RUN상태로 전환
+                _player.ChangeState(0, transitionDuration: 0.1f); // RUN -> IDLE
+                return;
             }
+        }
+
+        public override void Exit()
+        {
+            base.Exit();
+            _player.PlayerInput.OnMovementChanged -= HandleMovementChange;
         }
     }
 }

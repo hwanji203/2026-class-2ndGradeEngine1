@@ -1,9 +1,11 @@
+using System;
 using System.Linq;
 using Editor;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Object = UnityEngine.Object;
 
 public class StageEditorWindow : EditorWindow
 {
@@ -16,13 +18,14 @@ public class StageEditorWindow : EditorWindow
     private VisualElement _itemSelectContainer;
     private DropdownField _itemDropdownField;
     private VisualElement _previewImage;
-
+    
     private static GameObject _rootObject;
     private static StagePrefabListSO _prefabList;
     private static int _cellSize = 5;
 
     private bool _isReadyToPlacement = false;
     private GameObject _selectedPrefab;
+    
 
     [MenuItem("Tools/StageEditorWindow")]
     public static void ShowWindow()
@@ -35,26 +38,26 @@ public class StageEditorWindow : EditorWindow
     {
         // Each editor window contains a root VisualElement object
         VisualElement root = rootVisualElement;
-
+        
         editorView.CloneTree(root);
-
+        
         _rootObjectField = root.Q<ObjectField>("RootObjectField");
         _itemSelectContainer = root.Q<VisualElement>("ItemSelectContainer");
         _itemDropdownField = root.Q<DropdownField>("ItemDropdownField");
         _prefabListField = root.Q<ObjectField>("PrefabListObjectField");
         _previewImage = root.Q<VisualElement>("PreviewImage");
         _cellSizeField = root.Q<IntegerField>("CellSizeIntField");
-
+        
         _rootObjectField.RegisterValueChangedCallback(HandleRootObjectChange);
         _prefabListField.RegisterValueChangedCallback(HandlePrefabListChange);
         _itemDropdownField.RegisterValueChangedCallback(HandleItemSelect);
         _cellSizeField.RegisterValueChangedCallback(evt => { _cellSize = evt.newValue; });
 
-        if (_rootObject != null)
+        if(_rootObject != null)
             _rootObjectField.SetValueWithoutNotify(_rootObject);
         if(_prefabList != null)
             _prefabListField.SetValueWithoutNotify(_prefabList);
-
+        
         CheckSelectContainerActive();
     }
 
@@ -68,23 +71,26 @@ public class StageEditorWindow : EditorWindow
         SceneView.duringSceneGui -= HandleSceneGui;
     }
 
-    private void HandleSceneGui(SceneView view)
+    private void HandleSceneGui(SceneView sceneView)
     {
         if (!_isReadyToPlacement)
             return;
-        Event evt = Event.current;
+        
+        Event evt = Event.current; // 현재 발생한 이벤트 받아옴
+        
+        Ray ray = HandleUtility.GUIPointToWorldRay(evt.mousePosition); // 씬을 보여주는 카메라의 마우스 위치를 World위치로 변환
+        Plane groundPlane = new Plane(Vector3.up, Vector3.zero); // 바닥에 위를 바라보는 바닥을 깔아버림
 
-        Ray ray = HandleUtility.GUIPointToWorldRay(evt.mousePosition);
-        Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
-
-        if (groundPlane.Raycast(ray, out float distance))
+        if (groundPlane.Raycast(ray, out float distance)) // Plane에 레이가 닿으면
         {
-            Vector3 worldPosition = ray.GetPoint(distance);
+            Vector3 worldPosition = ray.GetPoint(distance); // 거리를 가지고 위치를 구함
 
             Vector3 snappedPosition = new Vector3(
                 Mathf.Floor(worldPosition.x / _cellSize) * _cellSize + _cellSize * 0.5f,
                 0,
                 Mathf.Floor(worldPosition.z / _cellSize) * _cellSize + _cellSize * 0.5f);
+            // Mathf.Floor(worldPosition.x / _cellSize) * _cellSize: 칸 수에 맞는 이동 거리
+            // + _cellSize * 0.5f 중앙 잡기
 
             if (_selectedPrefab != null)
             {
@@ -92,29 +98,29 @@ public class StageEditorWindow : EditorWindow
                 if (evt.type == EventType.MouseDown && evt.button == 0)
                 {
                     PlacePrefab(snappedPosition);
-                    evt.Use();
+                    evt.Use(); //이 이벤트를 다른곳에서 쓰지 않게 삭제해버린다.
                 }
             }
-
+            //씬뷰상의 기본 컨트롤 비활성화해서 포커싱을 유지하게 해주는거.
             HandleUtility.AddDefaultControl(GUIUtility.GetControlID(FocusType.Passive));
-
-            view.Repaint();
+            
+            sceneView.Repaint();
         }
     }
 
-    private void PlacePrefab(Vector3 snappedPosition)
+    private void PlacePrefab(Vector3 snappedPosition)   
     {
-        if (_selectedPrefab == null || !_isReadyToPlacement)
+        if(_selectedPrefab == null || !_isReadyToPlacement)
             return;
-
+        
         Vector3 pivotOffset = new Vector3(_cellSize * 0.5f, 0, -_cellSize * 0.5f);
         Vector3 placementPosition = snappedPosition + pivotOffset;
-
+        
         GameObject newInstance = PrefabUtility.InstantiatePrefab(_selectedPrefab, _rootObject.transform)
-            as GameObject;
-
+            as GameObject; // GameObject.
+        
         newInstance.transform.position = placementPosition;
-
+        
         Undo.RegisterCreatedObjectUndo(newInstance, $"Placed Prefab {newInstance.name}");
     }
 
@@ -134,7 +140,7 @@ public class StageEditorWindow : EditorWindow
             return;
         }
 
-        _selectedPrefab = _prefabList.prefabs[_itemDropdownField.index];
+        _selectedPrefab = _prefabList.prefabs[_itemDropdownField.index]; //현재 선택된 인덱스의 프리팹을 가져와
         Texture2D preview = AssetPreview.GetAssetPreview(_selectedPrefab);
         if (preview != null)
         {
@@ -147,18 +153,18 @@ public class StageEditorWindow : EditorWindow
                 _previewImage.schedule.Execute(() =>
                 {
                     Texture2D loadedPreview = AssetPreview.GetAssetPreview(_selectedPrefab);
-                    if (loadedPreview != null)
-                        _previewImage.style.backgroundImage = loadedPreview;
+                    if(loadedPreview != null)
+                        _previewImage.style.backgroundImage = loadedPreview; 
                 }).Until(() => !AssetPreview.IsLoadingAssetPreview(_selectedPrefab.GetInstanceID()));
             }
         }
-            _isReadyToPlacement = true;
+        _isReadyToPlacement = true;
     }
 
     private void CheckSelectContainerActive()
     {
         bool isReadyToView = _rootObject != null && _prefabList != null;
-
+        
         _itemSelectContainer.style.display = isReadyToView ? DisplayStyle.Flex : DisplayStyle.None;
         if (isReadyToView)
         {
@@ -180,17 +186,17 @@ public class StageEditorWindow : EditorWindow
 
     private void HandleRootObjectChange(ChangeEvent<Object> evt)
     {
-        //Debug.Log($"���� �� : {evt.previousValue} ���� {evt.newValue} �� ��ȯ");
+        //Debug.Log($"이전 값 : {evt.previousValue} 에서 {evt.newValue} 로 변환");
         GameObject newRootObject = evt.newValue as GameObject;
         if (PrefabUtility.IsPartOfPrefabAsset(newRootObject))
         {
             _rootObject = null;
             _rootObjectField.SetValueWithoutNotify(null);
-            EditorUtility.DisplayDialog("Error",
-                "��Ʈ ������Ʈ�� ���̶�Ű�� �ִ� ������Ʈ���� �մϴ�.", "OK");
+            EditorUtility.DisplayDialog("Error", 
+                "루트 오브젝트는 하이라키에 있는 오브젝트여야 합니다.", "OK");
             return;
         }
-
+        
         _rootObject = newRootObject;
         CheckSelectContainerActive();
     }

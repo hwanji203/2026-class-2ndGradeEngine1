@@ -1,8 +1,7 @@
-namespace GGMLib
+namespace GGMLib.ModuleSystem
 {
     public interface IModule
     {
-        void Initialize(ModuleOwner owner);
+        public void Initialize(ModuleOwner owner);
     }
 }
-

@@ -4,7 +4,6 @@ namespace Players
 {
     public interface IControlMovement
     {
-        void SetMovementDirection(Vector3 inputDirection);
+        void SetMovementDirection(Vector2 inputDirection);
     }
 }
-

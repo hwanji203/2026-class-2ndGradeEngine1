@@ -1,0 +1,21 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Scripts/Test/asd.uss?fileID=7433441132597879392&amp;guid=a9bf975753ee926448dc94387bb5dd09&amp;type=3" />
+    <ui:VisualElement name="Container" style="flex-grow: 1; -unity-font-style: bold;">
+        <ui:VisualElement name="PopUpContainer" class="pop-up-container open" style="flex-grow: 1; transition-duration: 1s;">
+            <ui:VisualElement name="Header" style="flex-grow: 0; flex-basis: 200px;">
+                <ui:VisualElement name="Text" style="flex-basis: 100px; justify-content: center;">
+                    <ui:Label text="팝업 라벨" style="-unity-text-align: middle-left; font-size: 30px;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Buttons" style="flex-grow: 1; flex-direction: row; flex-basis: 100px; align-self: stretch; justify-content: flex-start; align-content: flex-start; flex-wrap: nowrap; align-items: stretch;">
+                    <ui:Button text="버튼 1" name="PopUpButton1" class="white-btn" />
+                    <ui:Button text="Button" name="PopUpButton2" class="white-btn" />
+                    <ui:Button text="Button" name="PopUpButton3" class="white-btn" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="Body" style="flex-grow: 1; border-top-width: 1px; border-right-width: 0; border-bottom-width: 1px; border-left-width: 0; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0);" />
+            <ui:VisualElement name="Footer" style="flex-grow: 0; flex-basis: 100px; align-self: stretch; justify-content: space-between; align-items: flex-end; flex-direction: row-reverse;">
+                <ui:Button text="Button" class="white-btn" style="justify-content: flex-end; flex-direction: row-reverse; align-self: stretch; align-items: flex-end; align-content: flex-start; flex-basis: 200px; flex-grow: 0;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

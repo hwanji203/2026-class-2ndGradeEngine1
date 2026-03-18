@@ -1,9 +1,10 @@
+using System;
 using UnityEngine;
 
-namespace Assets.GGMLib.AnimationSystem
+namespace GGMLib.AnimationSystem
 {
-    [CreateAssetMenu(fileName = "Animator param", menuName = "Lib/Animator param", order = 10)]
-    public class AnimParamSO : ScriptableObject
+    [CreateAssetMenu(fileName = "Animator param", menuName = "Lib/Animator Param", order = 0)]
+    public class AnimParamSo : ScriptableObject
     {
         [field: SerializeField] public string ParamName { get; private set; }
         [field: SerializeField] public int ParamHash { get; private set; }
