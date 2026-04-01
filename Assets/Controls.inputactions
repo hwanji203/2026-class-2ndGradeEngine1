@@ -32,6 +32,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Skill",
+                    "type": "Button",
+                    "id": "4c0f0b3a-89de-4b07-b14f-8883d4d3e078",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -263,6 +272,50 @@
                     "processors": "",
                     "groups": "XR",
                     "action": "Slide",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bed43aa9-f58f-4ab8-a29d-93595696c64d",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "Scale",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Skill",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3be77ad6-8070-4942-8083-70b22638fcc8",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "Scale(factor=2)",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Skill",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0f4b510e-72eb-4529-bdb2-4e3f65941a12",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "Scale(factor=3)",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Skill",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c52935ed-1193-4ad6-916b-f0ba05bc3f1a",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "Scale(factor=4)",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Skill",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

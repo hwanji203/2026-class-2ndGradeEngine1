@@ -10,6 +10,7 @@ namespace Players
         public event Action<Vector2> OnMovementChanged;
         public event Action OnAttackKeyPressed;
         public event Action OnSlideKeyPressed;
+        public event Action<int> OnSkillKeyPressed;
 
         private Controls _controls;
 
@@ -47,6 +48,15 @@ namespace Players
             if(context.performed)
                 OnSlideKeyPressed?.Invoke();
 
+        }
+
+        public void OnSkill(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                int keyCode = (int) context.ReadValue<float>();
+                OnSkillKeyPressed?.Invoke(keyCode);
+            }
         }
     }
 }

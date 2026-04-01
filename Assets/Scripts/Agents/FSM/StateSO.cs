@@ -9,6 +9,6 @@ namespace Agents.FSM
         public string stateName;
         public string className;
         public int assetIndex;
-        public AnimParamSo stateParam;
+        public AnimParamSO stateParam;
     }
 }

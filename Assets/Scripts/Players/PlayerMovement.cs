@@ -14,10 +14,13 @@ namespace Players
         private float _verticalVelocity;
         private Vector3 _movementDirection;
         private ModuleOwner _owner;
+        private Vector3 _manulVelocity;
 
         public bool IsGround => controller.isGrounded;
         public Vector3 Velocity => _velocity;
-        
+        public bool CanManualMove { get; set; } = true;
+
+
         public void Initialize(ModuleOwner owner)
         {
             _owner = owner;
@@ -56,13 +59,23 @@ namespace Players
 
         private void CalculateMovement()
         {
-            _velocity = Quaternion.Euler(0, -45f, 0) * _movementDirection; // 쿼터뷰
+            if (CanManualMove)
+                _velocity = Quaternion.Euler(0, -45f, 0) * _movementDirection;
+            else
+                _velocity = _manulVelocity;
+
             _velocity *= moveSpeed * Time.deltaTime;
+
             if(_velocity.sqrMagnitude > 0f)
             {
                 Quaternion targetRotation = Quaternion.LookRotation(_velocity);
                 _owner.transform.rotation = Quaternion.Lerp(_owner.transform.rotation, targetRotation, Time.deltaTime * 10);
             }
+        }
+
+        public void SetMovementVelocity(Vector3 velocity)
+        {
+            _manulVelocity = velocity;
         }
     }
 }

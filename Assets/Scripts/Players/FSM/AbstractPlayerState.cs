@@ -1,9 +1,8 @@
 using Players;
-using UnityEngine;
 
 namespace Agents.FSM
 {
-    public class AbstractPlayerState : AgentState
+    public abstract class AbstractPlayerState : AgentState
     {
         protected PlayerController _player;
         protected IControlMovement _controlMovement;

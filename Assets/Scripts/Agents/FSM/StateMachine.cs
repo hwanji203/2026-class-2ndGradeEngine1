@@ -12,13 +12,16 @@ namespace Agents.FSM
         public StateMachine(Agent agent, StateSO[] stateList)
         {
             _stateDict = new();
-            foreach (var stateSo in stateList)
+            foreach (var stateData in stateList)
             {
-                Type type = Type.GetType(stateSo.className); // 클래스 이름으로 타입을 찾음
-                Debug.Assert(type != null, $"State class {stateSo.className} not found.");
+                Type type = Type.GetType(stateData.className); // 클래스 이름으로 타입을 찾음
+                Debug.Assert(type != null, $"State class {stateData.className} not found.");
+
+                int paramHash = stateData.stateParam == null ? 0 : stateData.stateParam.ParamHash;
+
                 // 런타임 중에 생성자를 호출하여 Object를 만들고 AgentState로 강제 캐스팅함
-                AgentState agentState = (AgentState)Activator.CreateInstance(type, agent, stateSo.stateParam.ParamHash);
-                _stateDict.Add(stateSo.assetIndex, agentState);
+                AgentState agentState = (AgentState)Activator.CreateInstance(type, agent, stateData.stateParam.ParamHash);
+                _stateDict.Add(stateData.assetIndex, agentState);
             }
         }
 

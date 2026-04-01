@@ -27,7 +27,7 @@ namespace Players.FSM
         {
             if (movementKey.magnitude > INPUT_DEADZONE)
             {
-                _player.ChangeState(1, transitionDuration: 0.1f); // IDLE -> RUN
+                _player.ChangeState(PlayerState.RUN, transitionDuration: 0.1f); // IDLE -> RUN
             }
         }
     }

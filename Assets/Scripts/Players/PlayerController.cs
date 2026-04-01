@@ -1,5 +1,6 @@
 using Agents;
 using Agents.FSM;
+using Players.FSM;
 using UnityEngine;
 
 namespace Players
@@ -7,14 +8,14 @@ namespace Players
     public class PlayerController : Agent
     {
         [field: SerializeField] public PlayerInputSO PlayerInput { get; private set; }
-        [SerializeField] private StateSO[] playerStates;
+        [SerializeField] private StateListSO playerStates;
         
         private IControlMovement _movement; 
         private StateMachine _stateMachine;
         protected override void InitializeComponents()
         {
             base.InitializeComponents();
-            _stateMachine = new StateMachine(this, playerStates);
+            _stateMachine = new StateMachine(this, playerStates.states);
         }
 
         private void Start()
@@ -26,6 +27,7 @@ namespace Players
         {
             _stateMachine.UpdateMachine();
         }
-        public void ChangeState(int newStateIndex, float transitionDuration) => _stateMachine.ChangeState(newStateIndex, transitionDuration);
+        public void ChangeState(PlayerState newStateIndex, float transitionDuration)
+            => _stateMachine.ChangeState((int)newStateIndex, transitionDuration);
     }
 }
