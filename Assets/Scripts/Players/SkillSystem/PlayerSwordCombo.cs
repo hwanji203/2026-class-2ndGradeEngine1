@@ -14,9 +14,9 @@ namespace Players.SkillSystem
     public class PlayerSwordCombo : AbstractPlayerSkill
     {
         [SerializeField] private AnimParamSO[] comboClips;
-        [SerializeField] private AnimationCurve[] comboCurves; //¿òÁ÷ÀÌ´Â ¾çÀ» Á¶Àý
-        [SerializeField] private float[] comboDurations; //ÄÞº¸ Áö¼Ó½Ã°£
-        [SerializeField] private float comboWindow = 0.4f; //ÄÞº¸°¡ ÀÌ¾îÁö´Â ½Ã°£
+        [SerializeField] private AnimationCurve[] comboCurves; //ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        [SerializeField] private float[] comboDurations; //ï¿½Þºï¿½ ï¿½ï¿½ï¿½Ó½Ã°ï¿½
+        [SerializeField] private float comboWindow = 0.4f; //ï¿½Þºï¿½ï¿½ï¿½ ï¿½Ì¾ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
 
         private AgentTrigger _agentTrigger;
 
@@ -27,7 +27,7 @@ namespace Players.SkillSystem
         {
             base.InitializeSkill(skillModule);
             _agentTrigger = _player.GetModule<AgentTrigger>();
-            Debug.Assert(_agentTrigger != null, "Sword combo °ø°ÝÀº ¾Ö´Ï¸ÞÀÌ¼Ç Æ®¸®°Å°¡ ÇÊ¿äÇÕ´Ï´Ù.");
+            Debug.Assert(_agentTrigger != null, "Sword combo ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ Æ®ï¿½ï¿½ï¿½Å°ï¿½ ï¿½Ê¿ï¿½ï¿½Õ´Ï´ï¿½.");
         }
 
         public override bool CanUseSkill(GameObject target = null)
@@ -46,6 +46,11 @@ namespace Players.SkillSystem
             }
             _renderer.PlayClip(comboClips[ComboCounter].ParamHash, 0f, 0.05f);
 
+            Vector3 mousePosition = _player.PlayerInput.GetWorldMousePosition();
+            mousePosition.y = _player.transform.position.y;
+            
+            Vector3 direction = (mousePosition - _player.transform.position).normalized;
+            _movement.RotateTo(direction);
 
             StartCoroutine(SwordComboCoroutine());
         }
@@ -58,16 +63,16 @@ namespace Players.SkillSystem
             float comboDuration = comboDurations[ComboCounter];
             float currentDuration = 0;
             Vector3 forward = _player.transform.forward;
-            _movement.CanManualMove = false;//ÀÚµ¿ Á¶ÀÛ ¸ðµå·Î º¯°æ
+            _movement.CanManualMove = false;//ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             while (IsUsing)
             {
-                float percent = currentDuration / comboDuration; //0~1 °ªÀ¸·Î °ªÀ» Á¤±ÔÈ­ÇØÁØ´Ù.
+                float percent = currentDuration / comboDuration; //0~1 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½È­ï¿½ï¿½ï¿½Ø´ï¿½.
                 currentDuration += Time.deltaTime;
                 float force = comboCurve.Evaluate(percent);
                 _movement.SetMovementVelocity(forward * force);
                 yield return null;
             }
-            _movement.CanManualMove = true; //¼öµ¿ Á¶ÀÛ¸ðµå·Î º¯°æ.
+            _movement.CanManualMove = true; //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Û¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
             _agentTrigger.OnAnimationEnd -= HandleAnimationEnd;
         }
 

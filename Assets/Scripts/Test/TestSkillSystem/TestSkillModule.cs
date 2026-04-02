@@ -31,7 +31,7 @@ namespace Test.TestSkillSystem
             _player.PlayerInput.OnSkillKeyPressed -= HandleSkillKeyPress;
         }
 
-        private void HandleSkillKeyPress(int skillIndex)
+        private void HandleSkillKeyPress(int skillIndex, bool pressed)
         {
             if (_skillDict.TryGetValue(skillIndex, out var skill))
             {

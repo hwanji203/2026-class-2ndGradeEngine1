@@ -43,6 +43,13 @@ namespace Players
             controller.Move(_velocity);
         }
 
+        public void RotateTo(Vector3 direction)
+        {
+            if (direction.sqrMagnitude < Mathf.Epsilon) return;
+            direction.y = 0;
+            _owner.transform.forward = direction.normalized;
+        }
+
         private void ApplyGravity()
         {
             if (IsGround && _verticalVelocity <= 0)// 땅에 있고 수직 속력이 0보다 작으면

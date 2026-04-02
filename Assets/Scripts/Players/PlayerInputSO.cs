@@ -10,9 +10,26 @@ namespace Players
         public event Action<Vector2> OnMovementChanged;
         public event Action OnAttackKeyPressed;
         public event Action OnSlideKeyPressed;
-        public event Action<int> OnSkillKeyPressed;
+        public delegate void SkillKeyPress(int keyIndex, bool isPressed);
+        public event SkillKeyPress OnSkillKeyPressed;
+
+        [SerializeField] private LayerMask whatIsGround;
 
         private Controls _controls;
+        private Vector3 _worldMousePosition;
+        private Vector2 _screenMousePosition;
+
+        private Camera _mainCam;
+
+        public Camera MainCam
+        {
+            get
+            {
+                if (_mainCam == null)
+                    _mainCam = Camera.main;
+                return _mainCam;
+            }
+        }
 
         private void OnEnable()
         {
@@ -47,16 +64,37 @@ namespace Players
         {
             if(context.performed)
                 OnSlideKeyPressed?.Invoke();
-
         }
 
         public void OnSkill(InputAction.CallbackContext context)
-        {
+        { 
+            int keyIndex = context.action.GetBindingIndexForControl(context.control);
             if (context.performed)
             {
-                int keyCode = (int) context.ReadValue<float>();
-                OnSkillKeyPressed?.Invoke(keyCode);
+                OnSkillKeyPressed?.Invoke(keyIndex, true);
             }
+            else if (context.canceled)
+            {
+                OnSkillKeyPressed?.Invoke(keyIndex, false);
+            }
+        }
+
+        public void OnPointer(InputAction.CallbackContext context)
+        {
+            _screenMousePosition = context.ReadValue<Vector2>();
+        }
+
+        public Vector3 GetWorldMousePosition()
+        {
+            if (MainCam == null)
+                return _worldMousePosition;
+
+            Ray cameraRay = MainCam.ScreenPointToRay(_screenMousePosition);
+            if (Physics.Raycast(cameraRay, out RaycastHit hit, MainCam.farClipPlane, whatIsGround))
+            {
+                _worldMousePosition = hit.point;
+            }
+            return _worldMousePosition;
         }
     }
 }

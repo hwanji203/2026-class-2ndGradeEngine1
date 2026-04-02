@@ -22,7 +22,7 @@ namespace Players
         {
             Owner = owner;
             Player = Owner as PlayerController;
-            Debug.Assert(Player != null, "ÇÃ·¹ÀÌ¾î ½ºÅ³ ¸ðµâÀº ÇÃ·¹ÀÌ¾îÀÇ ÀÚ½ÄÀ¸·Î ÀÖ¾î¾ß ÇÕ´Ï´Ù.");
+            Debug.Assert(Player != null, "ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½ ï¿½Õ´Ï´ï¿½.");
 
             _skillDict = GetComponentsInChildren<ISkill>()
                 .ToDictionary(skill => skill.SkillData.skillIndex);
@@ -33,12 +33,16 @@ namespace Players
             }
 
             Player.PlayerInput.OnAttackKeyPressed += HandleAttackKeyPress;
+            Player.PlayerInput.OnSlideKeyPressed += HandleSlideKeyPress;
         }
 
         private void OnDestroy()
         {
             if (Player != null && Player.PlayerInput != null)
+            {
                 Player.PlayerInput.OnAttackKeyPressed -= HandleAttackKeyPress;
+                Player.PlayerInput.OnSlideKeyPressed -= HandleSlideKeyPress;
+            }
         }
 
         private void HandleAttackKeyPress()
@@ -47,6 +51,15 @@ namespace Players
             {
                 Player.ChangeState(PlayerState.SKILL, 0);
                 UseSkill(0);
+            }
+        }
+
+        private void HandleSlideKeyPress()
+        {
+            if (CanUseSkill(1))
+            {
+                Player.ChangeState(PlayerState.SKILL, 0);
+                UseSkill(1);
             }
         }
 
