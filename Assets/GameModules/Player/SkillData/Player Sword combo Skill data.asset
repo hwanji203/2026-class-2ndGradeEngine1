@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillIndex: 0
   skillName: Swod Combo
-  cooldown: 0
+  cooldown: 1

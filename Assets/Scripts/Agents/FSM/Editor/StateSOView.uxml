@@ -3,6 +3,6 @@
         <ui:TextField label="State name" placeholder-text="스테이트의 이름을 대문자로 입력" name="StateNameField" binding-path="stateName" />
         <ui:DropdownField label="Class name" name="ClassNameDropdown" binding-path="className" />
         <ui:IntegerField label="Asset index" value="0" name="AssetIndexField" binding-path="assetIndex" />
-        <uie:ObjectField label="Anim Param" name="StateParamField" type="GGMLib.AnimationSystem.AnimParamSo, Assembly-CSharp" binding-path="stateParam" />
+        <uie:ObjectField label="Anim Param" name="StateParamField" type="GGMLib.AnimationSystem.AnimParamSO, Assembly-CSharp" binding-path="stateParam" />
     </ui:VisualElement>
 </ui:UXML>
