@@ -1,13 +1,10 @@
 using Agents;
 using CombatSystem;
-using DG.Tweening;
 using GGMLib.AnimationSystem;
 using Players.SKillSystem;
 using System.Collections;
-using System.Reflection;
+using CoreSystem;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 namespace Players.SkillSystem
 {
@@ -17,8 +14,10 @@ namespace Players.SkillSystem
         [SerializeField] private AnimationCurve[] comboCurves; //�����̴� ���� ����
         [SerializeField] private float[] comboDurations; //�޺� ���ӽð�
         [SerializeField] private float comboWindow = 0.4f; //�޺��� �̾����� �ð�
+        [SerializeField] private AssetNameSO[] comboEffects;
 
         private AgentTrigger _agentTrigger;
+        private VfxModule _vfxModule;
 
         public float AttackSpeed { get; private set; }
         public int ComboCounter { get; private set; } = 0;
@@ -28,6 +27,7 @@ namespace Players.SkillSystem
             base.InitializeSkill(skillModule);
             _agentTrigger = _player.GetModule<AgentTrigger>();
             Debug.Assert(_agentTrigger != null, "Sword combo ������ �ִϸ��̼� Ʈ���Ű� �ʿ��մϴ�.");
+            _vfxModule = _player.GetModule<VfxModule>();
         }
 
         public override bool CanUseSkill(GameObject target = null)
@@ -44,6 +44,7 @@ namespace Players.SkillSystem
             {
                 ComboCounter = 0;
             }
+            _vfxModule?.PlayVfx(comboEffects[ComboCounter].AssetHash);
             _renderer.PlayClip(comboClips[ComboCounter].ParamHash, 0f, 0.05f);
 
             Vector3 mousePosition = _player.PlayerInput.GetWorldMousePosition();

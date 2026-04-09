@@ -47,7 +47,7 @@ namespace Players
         {
             if (direction.sqrMagnitude < Mathf.Epsilon) return;
             direction.y = 0;
-            _owner.transform.forward = direction.normalized;
+            _owner.transform.rotation = Quaternion.LookRotation(direction);
         }
 
         private void ApplyGravity()
