@@ -13,53 +13,38 @@ public class TestPlayerMove : MonoBehaviour
     private CharacterController _controller;
 
     private GameObject box;
-
+    private Vector3 _movementDirection;
+    
     private void Awake()
     {
         _controller = GetComponent<CharacterController>();
+        _input.OnMovementChanged += Move;
+    }
+
+    private void Move(Vector2 obj)
+    {
+        _movementDirection = Quaternion.Euler(0, -45, 0) * new Vector3(obj.x, 0, obj.y);
     }
 
     private void Update()
     {
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
-            _targetPos = _input.GetWorldMousePosition();
-            _targetPos.y = transform.position.y;
-            if (box != null)
-            {
-                Destroy(box);
-                box = null;
-            }
-            box = Instantiate(boxPrefab, _targetPos, Quaternion.identity);
-            transform.LookAt(_targetPos);
             OnShoot();
         }
-        if (box == null)
-            return;
-        if (box != null)
-        {
-            transform.LookAt(_targetPos);
-        }
         
-        Vector3 playerPos = transform.position;
-        Vector3 _velocity = transform.forward;
-        _velocity *= speed * Time.deltaTime;
-        if ((_targetPos - playerPos).magnitude >= _velocity.magnitude)
-        {
-            _controller.Move(_velocity);
-        }
-        else if (box != null)
-        {
-            transform.position = _targetPos;
-            Destroy(box);
-            box = null;
-        }
+        Vector3 _direction = (_input.GetWorldMousePosition() - transform.position).normalized;
+        GetComponent<PlayerRayCast>().RayCast(new(transform.position,_direction));
+        
+        _targetPos = _input.GetWorldMousePosition();
+        _targetPos.y = transform.position.y;
+        transform.rotation = Quaternion.LookRotation((_targetPos -  transform.position).normalized);
+        
+        _controller.Move(_movementDirection * (speed * Time.deltaTime));
     }
 
     private void OnShoot()
     {
-        Vector3 _direction = (_input.GetWorldMousePosition() - transform.position).normalized;
-        GetComponent<PlayerRayCast>().RayCast(new(transform.position,_direction));
         Vector3 vector = UnityEngine.Random.onUnitSphere;
         GetComponent<CinemachineImpulseSource>().GenerateImpulse(vector);
         GetComponentInChildren<ParticleSystem>().Play();
