@@ -7,8 +7,8 @@ namespace Agents
     public class AgentRenderer : MonoBehaviour, IModule, IRenderer
     {
         public Animator Animator { get; private set; }
-        private ModuleOwner _owner;
-        public void Initialize(ModuleOwner owner)
+        protected ModuleOwner _owner;
+        public virtual void Initialize(ModuleOwner owner)
         {
             _owner = owner;
             Animator = GetComponent<Animator>();
