@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Reflex.Attributes;
 using UnityEngine;
@@ -14,7 +14,7 @@ namespace Test.ReflexTest
         private void Start()
         {
             Debug.Log(string.Join(" ", _injectString));
-            sceneInstaller.TestConsoleScene(("TTT"));
+            sceneInstaller.TestConsoleScene("TTT");
         }
     }
 }

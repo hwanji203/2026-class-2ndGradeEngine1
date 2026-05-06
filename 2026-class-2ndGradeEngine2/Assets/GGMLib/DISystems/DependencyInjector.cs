@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -46,13 +46,13 @@ namespace GGMLib.DISystems
             
             IEnumerable<MethodInfo> methods = type.GetMethods(_bindingFlags)
                 .Where(method => Attribute.IsDefined(method, typeof(InjectAttribute)));
-            //여기엔 매서드 파라메터로 주입하는게 들어가야 해.
 
             foreach (MethodInfo method in methods)
             {
                 Type[] requireParamTypes = method.GetParameters().Select(p => p.ParameterType).ToArray();
-                object[] requiredInstance = requireParamTypes.Select(Resolve).ToArray();
-                method.Invoke(injectable, requiredInstance);
+                //GameManager와 EnemyManager
+                object[] requiredInstances = requireParamTypes.Select(Resolve).ToArray();
+                method.Invoke(injectable, requiredInstances);
             }
         }
 

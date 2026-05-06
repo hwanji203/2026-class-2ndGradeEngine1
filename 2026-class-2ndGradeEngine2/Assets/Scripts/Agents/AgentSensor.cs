@@ -1,4 +1,4 @@
-﻿using GGMLib.ModuleSystem;
+using GGMLib.ModuleSystem;
 using UnityEngine;
 
 namespace Agents

@@ -1,4 +1,3 @@
-using System;
 using Agents;
 using CombatSystem;
 using Enemies.Nav;
@@ -18,14 +17,14 @@ namespace Enemies
         public INavMovement NavMovement { get; private set; }
         public BehaviorGraphAgent BtAgent { get; private set; }
         public IRenderer AgentRenderer { get; private set; }
-        public ISkillModule SkillModule { get; private set; }
         public AgentSensor Sensor { get; private set; }
-
+        public ISkillModule SkillModule { get; private set; }
+        
         [Inject] [field: SerializeField] public WayPointManager WayPoints { get; private set; }
         public int CurrentWayPointIndex { get; set; } = -1; //임시코드
-
+        
         [SerializeField] private bool canDrawDebug = false;
-
+        
         protected override void InitializeComponents()
         {
             base.InitializeComponents();

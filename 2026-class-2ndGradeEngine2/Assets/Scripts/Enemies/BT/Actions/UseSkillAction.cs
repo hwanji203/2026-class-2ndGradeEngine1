@@ -8,7 +8,7 @@ using Action = Unity.Behavior.Action;
 namespace Enemies.BT.Actions
 {
     [Serializable, GeneratePropertyBag]
-    [NodeDescription(name: "UseSkill", story: "[Enemy] use [SkillNumber] to [TargetGameObject]", category: "Action/Combat", id: "e8fdbb072513fd780107f3627db38e88")]
+    [NodeDescription(name: "UseSkill", story: "[Enemy] use [SkillNumber] to [TargetGameObject]", category: "Action/Combat", id: "4efae18dde7778ee0947c8f5a9df2348")]
     public partial class UseSkillAction : Action
     {
         [SerializeReference] public BlackboardVariable<AbstractEnemy> Enemy;
@@ -20,12 +20,12 @@ namespace Enemies.BT.Actions
         
         protected override Status OnStart()
         {
-            if (Enemy.Value == null || SkillNumber.Value < 0)
+            if (Enemy.Value == null || SkillNumber.Value < 0 || Enemy.Value.SkillModule == null)
             {
-                Debug.LogError("Can use skill의 기본 값이 설정되지 않았습니다.");
+                Debug.LogError("use skill의 기본 값이 설정되지 않았습니다.");
                 return Status.Failure;
             }
-            
+
             _skillModule = Enemy.Value.SkillModule;
             
             _isSkillEnd = false;
@@ -42,12 +42,12 @@ namespace Enemies.BT.Actions
 
         protected override Status OnUpdate()
         {
-            return _isSkillEnd ? Status.Success : Status.Running; //Fail 아니다
+            return _isSkillEnd ? Status.Success  : Status.Running; //Fail 아니다. 
         }
 
         protected override void OnEnd()
         {
-            if (_skillModule != null)
+            if(_skillModule != null)
                 _skillModule.OnCurrentSkillEnd -= HandleSkillEnd;
         }
     }

@@ -1,4 +1,4 @@
-﻿using Reflex.Core;
+using Reflex.Core;
 using UnityEngine;
 
 namespace Test.ReflexTest
@@ -10,7 +10,7 @@ namespace Test.ReflexTest
             containerBuilder.RegisterValue("Hello");
             containerBuilder.RegisterValue(this);
         }
-        
+
         public static void TestConsole(string msg)
         {
             Debug.Log($"Root installer test : {msg}");

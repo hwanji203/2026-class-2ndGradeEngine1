@@ -1,4 +1,4 @@
-﻿using Agents;
+using Agents;
 using CombatSystem;
 using GGMLib.AnimationSystem;
 using UnityEngine;
@@ -11,7 +11,7 @@ namespace Enemies.EnemySkills
         [SerializeField] private float crossFadeDuration = 0.15f;
         
         private AgentTrigger _trigger;
-
+        
         public override void InitializeSkill(ISkillModule skillModule)
         {
             base.InitializeSkill(skillModule);
@@ -22,10 +22,10 @@ namespace Enemies.EnemySkills
         public override bool CanUseSkill(GameObject target = null)
         {
             if (target == null) return false;
-
+            
             Vector3 distanceToTarget = target.transform.position - _ownerEnemy.transform.position;
             distanceToTarget.y = 0;
-            
+
             //사거리내에 있고 쿨다운이 없다면 사용가능하다고 판단한다.
             return NormalizedCooldown >= 1f && distanceToTarget.magnitude <= SkillData.skillRange;
         }
@@ -37,7 +37,7 @@ namespace Enemies.EnemySkills
             _renderer.PlayClip(skillAnimParam.ParamHash, 0, crossFadeDuration);
             _trigger.OnAnimationEnd += StopSkill;
         }
-        
+
         public override void StopSkill()
         {
             base.StopSkill();

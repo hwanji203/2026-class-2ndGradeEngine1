@@ -42,10 +42,10 @@ namespace Enemies
         {
             get
             {
-                if (NavMeshAgent == null || NavMeshAgent.pathPending) return false;
+                if(NavMeshAgent == null || NavMeshAgent.pathPending) return false;
 
-                return NavMeshAgent.remainingDistance < NavMeshAgent.stoppingDistance * 0.5f;
-                // && (!NavMeshAgent.hasPath || NavMeshAgent.velocity.sqrMagnitude <= 0.01f);
+                return NavMeshAgent.remainingDistance <= NavMeshAgent.stoppingDistance * 0.5f
+                 && (!NavMeshAgent.hasPath || NavMeshAgent.velocity.sqrMagnitude <= 0.01f);      
             }
         } 
         

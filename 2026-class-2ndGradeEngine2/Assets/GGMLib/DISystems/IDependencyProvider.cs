@@ -1,7 +1,4 @@
-﻿namespace GGMLib.DISystems
+namespace GGMLib.DISystems
 {
-    public interface IDependencyProvider
-    {
-        
-    }
+    public interface IDependencyProvider { }
 }

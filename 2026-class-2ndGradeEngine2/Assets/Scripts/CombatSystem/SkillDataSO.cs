@@ -9,7 +9,7 @@ namespace CombatSystem
         public string skillName;
         public float cooldown;
         //나중에 데미지 계수 등 여러가지 요소가 들어간다.
-        public float skillRange;
+        public float skillRange = 1f;
         public float damageMultiplier = 1f;
     }
 }

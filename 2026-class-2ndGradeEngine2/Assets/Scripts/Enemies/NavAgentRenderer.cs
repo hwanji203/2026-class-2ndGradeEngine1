@@ -14,7 +14,7 @@ namespace Enemies
         [Header("Navigation Agent control")]
         [SerializeField] private bool updateRotation;
         [SerializeField] private bool updatePosition;
-        
+
         [Header("Force rotation settings")]
         [SerializeField] private bool forceRotation;
         [SerializeField] private float forceRotationSpeed;
@@ -26,17 +26,17 @@ namespace Enemies
 
         public bool IsUpdateRotationByAnimator
         {
-            get => !updateRotation; //이게 켜져있으면 navAgent가 처리한다.
+            get => !updateRotation; //이게 켜져있으면 NavAgent가 처리한다.
             set
             {
                 updateRotation = !value;
                 if (_navAgent != null)
                 {
-                    _navAgent.updateRotation = updateRotation;
+                    _navAgent.updateRotation = updateRotation; //갱신한다.
                 }
             }
         }
-
+        
         public override void Initialize(ModuleOwner owner)
         {
             base.Initialize(owner);
@@ -61,7 +61,7 @@ namespace Enemies
             _owner.transform.position = rootPosition;
             _navAgent.nextPosition = rootPosition;
             
-            if (IsUpdateRotationByAnimator)
+            if(IsUpdateRotationByAnimator)
                 _owner.transform.rotation = Animator.rootRotation;
         }
 
@@ -106,11 +106,11 @@ namespace Enemies
         {
             if (!forceRotation || _navAgent == null || _navMovement.IsArrived) return;
 
-            Vector3 desiredDirection = _navAgent.steeringTarget - _owner.transform.position;
-            if (desiredDirection.sqrMagnitude > 0.01f) return; //거의 정지면 회전 안함.
-            
+            Vector3 desiredDirection = _navAgent.steeringTarget - _owner.transform.position; 
+            if(desiredDirection.sqrMagnitude < 0.01f) return; //거의 정지면 회전 안함.
+
             desiredDirection.y = 0;
-            Quaternion desiredRotation = Quaternion.LookRotation(desiredDirection, Vector3.up);
+            Quaternion desiredRotation = Quaternion.LookRotation(desiredDirection);
             _owner.transform.rotation = Quaternion.RotateTowards(
                 _owner.transform.rotation, desiredRotation, forceRotationSpeed * Time.deltaTime);
         }

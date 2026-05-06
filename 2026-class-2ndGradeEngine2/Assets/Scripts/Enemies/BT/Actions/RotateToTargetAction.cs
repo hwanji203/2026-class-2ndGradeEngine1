@@ -7,7 +7,7 @@ using Action = Unity.Behavior.Action;
 namespace Enemies.BT.Actions
 {
     [Serializable, GeneratePropertyBag]
-    [NodeDescription(name: "RotateToTarget", story: "[Enemy] rotate to [TargetGameObject]", category: "Action/Animation", id: "52262ce362f5e9c6dc2f316a83a4c563")]
+    [NodeDescription(name: "RotateToTarget", story: "[Enemy] rotate to [TargetGameObject]", category: "Action/Animation", id: "0a1b8ae2ff04799d3d3c317aa087f2c2")]
     public partial class RotateToTargetAction : Action
     {
         [SerializeReference] public BlackboardVariable<AbstractEnemy> Enemy;
@@ -20,9 +20,9 @@ namespace Enemies.BT.Actions
 
         protected override Status OnStart()
         {
-            if (Enemy.Value == null || TargetGameObject == null) 
+            if (Enemy.Value == null || TargetGameObject.Value == null)
                 return Status.Failure;
-            
+
             _startTime = Time.time;
             return Status.Running;
         }
@@ -35,9 +35,9 @@ namespace Enemies.BT.Actions
             Vector3 direction = (TargetGameObject.Value.transform.position - Enemy.Value.transform.position);
             direction.y = 0;
             Quaternion targetRotation = Quaternion.LookRotation(direction.normalized);
-            Enemy.Value.transform.rotation
+            Enemy.Value.transform.rotation 
                 = Quaternion.Lerp(Enemy.Value.transform.rotation,
-                    targetRotation, RotateSpeed.Value * Time.deltaTime);
+                    targetRotation, RotateSpeed.Value* Time.deltaTime);
             
             return Status.Running;
         }

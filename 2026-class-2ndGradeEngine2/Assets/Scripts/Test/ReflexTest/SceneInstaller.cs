@@ -1,4 +1,4 @@
-﻿using Reflex.Core;
+using Reflex.Core;
 using UnityEngine;
 
 namespace Test.ReflexTest
