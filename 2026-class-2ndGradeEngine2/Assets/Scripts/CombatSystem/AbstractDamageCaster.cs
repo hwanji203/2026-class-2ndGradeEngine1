@@ -5,15 +5,18 @@ namespace CombatSystem
 {
     public abstract class AbstractDamageCaster : MonoBehaviour
     {
-        [SerializeField] private LayerMask whatIsEnemy;
+        [SerializeField] protected LayerMask whatIsEnemy;
         
         public ModuleOwner CasterOwner { get; private set; }
+        public Vector3 LastHitPosition { get; protected set; }
+        public Vector3 LastHitNormal { get; protected set; }
+        public bool LastHitCritical { get; protected set; }
 
         public virtual void InitCaster(ModuleOwner owner)
         {
             CasterOwner = owner;
         }
         
-        public abstract void CastDamage(Vector3 position, Vector3 direction, SkillDataSO skillData);
+        public abstract bool CastDamage(Vector3 position, Vector3 direction, SkillDataSO skillData);
     }
 }

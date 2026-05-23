@@ -5,6 +5,7 @@ namespace CoreSystem.Effects
     public class PlayParticleVFX : MonoBehaviour, IPlayableVFX
     {
         [field: SerializeField] public AssetNameSO VfxName { get; private set; }
+        [field: SerializeField] public float VfxDuration { get; private set; }
 
         [SerializeField] private ParticleSystem[] particles;
         public void PlayVFX(Vector3 position, Quaternion rotation)

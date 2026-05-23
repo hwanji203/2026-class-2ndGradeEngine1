@@ -12,5 +12,6 @@ namespace CombatSystem
         bool CanUseSkill(int skillIndex, GameObject target = null);
         void UseSkill(int skillIndex, GameObject target = null);
         void InvokeSkillEnd();
+        void StopSkillIfNotFinished();
     }
 }

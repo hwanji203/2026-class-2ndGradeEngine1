@@ -47,8 +47,11 @@ namespace Enemies.BT.Actions
 
         protected override void OnEnd()
         {
-            if(_skillModule != null)
+            if (_skillModule != null)
+            {
                 _skillModule.OnCurrentSkillEnd -= HandleSkillEnd;
+                _skillModule.StopSkillIfNotFinished(); //공격으로 썼던 것들을 모드 Cleanup해라.
+            }
         }
     }
 }

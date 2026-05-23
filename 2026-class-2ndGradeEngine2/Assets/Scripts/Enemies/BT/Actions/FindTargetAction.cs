@@ -16,8 +16,11 @@ namespace Enemies.BT.Actions
 
         protected override Status OnStart()
         {
-            if (Enemy.Value == null || Enemy.Value.Sensor == null || TargetGameObject.Value != null)
+            if (Enemy.Value == null || Enemy.Value.Sensor == null)
                 return Status.Failure; //이건 나중에 고친다. 
+
+            if (TargetGameObject.Value != null)
+                return Status.Success;
 
             AgentSensor sensor = Enemy.Value.Sensor;
 

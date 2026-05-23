@@ -1,0 +1,169 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7849643367878495550
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 890337053247148470}
+  - component: {fileID: 40080769860258712}
+  m_Layer: 0
+  m_Name: Impact Effect
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &890337053247148470
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7849643367878495550}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8481717285841522965}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &40080769860258712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7849643367878495550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7ed491d7fac42edb03993c2dffe1fd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CoreSystem.Effects.PoolableVfx
+  <Item>k__BackingField: {fileID: 11400000, guid: 68fd57ca768f73745a2ffdf7c3fc0bb4, type: 2}
+  effectObject: {fileID: 6376410389915175910}
+--- !u!1001 &1845132711190068518
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 890337053247148470}
+    m_Modifications:
+    - target: {fileID: 4748681987041982144, guid: 92ac26339e67f3b47a21d8520e7adb46, type: 3}
+      propertyPath: m_Name
+      value: VFX_Impact_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 4794655212493717476, guid: 92ac26339e67f3b47a21d8520e7adb46, type: 3}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4794655212493717476, guid: 92ac26339e67f3b47a21d8520e7adb46, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4794655212493717476, guid: 92ac26339e67f3b47a21d8520e7adb46, type: 3}
+      propertyPath: autoRandomSeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7795210345721637939, guid: 92ac26339e67f3b47a21d8520e7adb46, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.99999994
+      objectReference: {fileID: 0}
+    - target: {fileID: 7795210345721637939, guid: 92ac26339e67f3b47a21d8520e7adb46, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.99999994
+      objectReference: {fileID: 0}
+    - target: {fileID: 7795210345721637939, guid: 92ac26339e67f3b47a21d8520e7adb46, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.99999994
+      objectReference: {fileID: 0}
+    - target: {fileID: 7795210345721637939, guid: 92ac26339e67f3b47a21d8520e7adb46, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7795210345721637939, guid: 92ac26339e67f3b47a21d8520e7adb46, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7795210345721637939, guid: 92ac26339e67f3b47a21d8520e7adb46, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7795210345721637939, guid: 92ac26339e67f3b47a21d8520e7adb46, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7795210345721637939, guid: 92ac26339e67f3b47a21d8520e7adb46, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7795210345721637939, guid: 92ac26339e67f3b47a21d8520e7adb46, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7795210345721637939, guid: 92ac26339e67f3b47a21d8520e7adb46, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7795210345721637939, guid: 92ac26339e67f3b47a21d8520e7adb46, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7795210345721637939, guid: 92ac26339e67f3b47a21d8520e7adb46, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7795210345721637939, guid: 92ac26339e67f3b47a21d8520e7adb46, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7795210345721637939, guid: 92ac26339e67f3b47a21d8520e7adb46, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: -5699031619209881399, guid: 92ac26339e67f3b47a21d8520e7adb46, type: 3}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4748681987041982144, guid: 92ac26339e67f3b47a21d8520e7adb46, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2194767328458571223}
+  m_SourcePrefab: {fileID: 100100000, guid: 92ac26339e67f3b47a21d8520e7adb46, type: 3}
+--- !u!1 &6376410389915175910 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4748681987041982144, guid: 92ac26339e67f3b47a21d8520e7adb46, type: 3}
+  m_PrefabInstance: {fileID: 1845132711190068518}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2194767328458571223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6376410389915175910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60431a54bb1f42da8c7c042b5fd6f7e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CoreSystem.Effects.PlayParticleVFX
+  <VfxName>k__BackingField: {fileID: 11400000, guid: e3b481eefcf5dc843b9d4ed3733cc253, type: 2}
+  <VfxDuration>k__BackingField: 0.5
+  particles:
+  - {fileID: 6562083237886575298}
+--- !u!198 &6562083237886575298 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 4794655212493717476, guid: 92ac26339e67f3b47a21d8520e7adb46, type: 3}
+  m_PrefabInstance: {fileID: 1845132711190068518}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8481717285841522965 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7795210345721637939, guid: 92ac26339e67f3b47a21d8520e7adb46, type: 3}
+  m_PrefabInstance: {fileID: 1845132711190068518}
+  m_PrefabAsset: {fileID: 0}

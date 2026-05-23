@@ -57,6 +57,16 @@ namespace Enemies
         {
             _currentSkill.OnSkillEnd -= InvokeSkillEnd; //구독해제 후 인보크
             OnCurrentSkillEnd?.Invoke();
+            _currentSkill = null;
+        }
+
+        public void StopSkillIfNotFinished()
+        {
+            if (_currentSkill != null)
+            {
+                _currentSkill.StopSkill(); //이벤트랑 구독해제 다 이루어질거다.
+                _currentSkill = null;
+            }
         }
     }
 }

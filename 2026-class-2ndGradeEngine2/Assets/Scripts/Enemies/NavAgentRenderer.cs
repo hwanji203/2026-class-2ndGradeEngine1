@@ -57,9 +57,12 @@ namespace Enemies
 
             Vector3 rootPosition = Animator.rootPosition;
             rootPosition.y = _navAgent.nextPosition.y;
-            
-            _owner.transform.position = rootPosition;
-            _navAgent.nextPosition = rootPosition;
+
+            if (NavMesh.SamplePosition(rootPosition, out NavMeshHit hit, 0.4f, NavMesh.AllAreas))
+            {
+                _owner.transform.position = rootPosition;
+                _navAgent.nextPosition = hit.position;
+            }
             
             if(IsUpdateRotationByAnimator)
                 _owner.transform.rotation = Animator.rootRotation;

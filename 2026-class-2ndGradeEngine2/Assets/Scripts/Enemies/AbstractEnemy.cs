@@ -1,5 +1,7 @@
 using Agents;
 using CombatSystem;
+using Enemies.BT;
+using Enemies.BT.Events;
 using Enemies.Nav;
 using Reflex.Attributes;
 using Unity.Behavior;
@@ -19,6 +21,9 @@ namespace Enemies
         public IRenderer AgentRenderer { get; private set; }
         public AgentSensor Sensor { get; private set; }
         public ISkillModule SkillModule { get; private set; }
+        public AgentTrigger Trigger { get; private set; }
+        
+        public StateChannel StateChannel { get; private set; }
         
         [Inject] [field: SerializeField] public WayPointManager WayPoints { get; private set; }
         public int CurrentWayPointIndex { get; set; } = -1; //임시코드
@@ -33,12 +38,50 @@ namespace Enemies
             BtAgent = GetComponent<BehaviorGraphAgent>();
             Sensor = GetModule<AgentSensor>();
             SkillModule = GetModule<ISkillModule>();
+            Trigger = GetModule<AgentTrigger>();
         }
 
         protected virtual void Start()
         {
-            BtAgent.SetVariableValue<AbstractEnemy>("Enemy", this);
+            if (!GetVariable<StateChannel>(BtVars.StateChannel, out var channelVariable))
+            {
+                Debug.Assert(StateChannel != null, $"BTAgent에 상태채널이 없습니다. : {gameObject.name}");
+                return;
+            }
+            
+            StateChannel = channelVariable.Value;
+            SetVariableValue(BtVars.Enemy, this);
         }
+
+        protected override void HandleHitEvent()
+        {
+            base.HandleHitEvent();
+            StateChannel.SendEventMessage(EnemyState.HIT);
+        }
+        
+        #region BT helpers
+
+        public void SetVariableValue<T>(string variableName, T value)
+        {
+            Debug.Assert(!string.IsNullOrEmpty(variableName), "변수 이름을 null일 수 없습니다.");
+
+            if (BtAgent.GetVariable<T>(variableName, out BlackboardVariable<T> variable))
+            {
+                variable.Value = value;
+            }
+            else
+            {
+                Debug.LogError($"Var : {variableName} 을 찾을 수 없습니다.");
+            }
+        }
+
+        public bool GetVariable<T>(string variableName, out BlackboardVariable<T> variable)
+        {
+            Debug.Assert(!string.IsNullOrEmpty(variableName), "변수 이름은 null일 수 없습니다.");
+            return BtAgent.GetVariable<T>(variableName, out variable);
+        }
+        
+        #endregion
 
         private void OnDrawGizmos()
         {

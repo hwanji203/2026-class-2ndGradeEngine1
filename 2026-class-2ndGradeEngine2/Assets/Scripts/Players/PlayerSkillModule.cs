@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CombatSystem;
+using GGMLib.EventChannelSystem;
 using GGMLib.ModuleSystem;
 using Players.FSM;
 using UnityEngine;
@@ -10,6 +11,8 @@ namespace Players
 {
     public class PlayerSkillModule : MonoBehaviour, ISkillModule, IModule
     {
+        [field: SerializeField] public GameEventChannelSO CreateChannel { get; private set; }
+        
         public ModuleOwner Owner { get; private set; }
         public PlayerController Player { get; private set; }
         public event Action OnCurrentSkillEnd;
@@ -93,8 +96,18 @@ namespace Players
         {
             _currentSkill.OnSkillEnd -= HandleCurrentSkillEnd;
             InvokeSkillEnd();
+            _currentSkill = null;
         }
 
         public void InvokeSkillEnd() => OnCurrentSkillEnd?.Invoke();
+        
+        public void StopSkillIfNotFinished()
+        {
+            if (_currentSkill != null)
+            {
+                _currentSkill.StopSkill();
+                _currentSkill = null;
+            }
+        }
     }
 }

@@ -6,6 +6,7 @@ namespace CoreSystem.Effects
     public class PlayGraphVFX : MonoBehaviour, IPlayableVFX
     {
         [field: SerializeField] public AssetNameSO VfxName { get; private set; }
+        [field: SerializeField] public float VfxDuration { get; private set; }
         [SerializeField] private VisualEffect[] effects;
         
         public void PlayVFX(Vector3 position, Quaternion rotation)

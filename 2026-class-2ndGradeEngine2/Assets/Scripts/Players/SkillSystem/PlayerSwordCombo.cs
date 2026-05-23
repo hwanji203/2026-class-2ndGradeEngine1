@@ -1,15 +1,19 @@
 using System.Collections;
-using System.Net.NetworkInformation;
 using Agents;
 using CombatSystem;
 using CoreSystem;
+using CoreSystem.Events;
 using GGMLib.AnimationSystem;
+using GGMLib.ObjectPool.Runtime;
 using UnityEngine;
 
 namespace Players.SkillSystem
 {
     public class PlayerSwordCombo : AbstractPlayerSkill
     {
+        [SerializeField] private PoolItemSO slashVfxItem;
+        [SerializeField] private PoolItemSO impactVfxItem;
+        
         [SerializeField] private AnimParamSO[] comboClips;
         [SerializeField] private AnimationCurve[] comboCurves; //움직이는 양을 조절
         [SerializeField] private float[] comboDurations; //콤보 지속시간
@@ -19,6 +23,7 @@ namespace Players.SkillSystem
         
         private AgentTrigger _agentTrigger;
         private VfxModule _vfxModule;
+        private AbstractDamageCaster _damageCaster;
         
         public float AttackSpeed { get; private set; }
         public int ComboCounter { get; private set; } = 0;
@@ -29,6 +34,10 @@ namespace Players.SkillSystem
             _agentTrigger = _player.GetModule<AgentTrigger>();
             Debug.Assert(_agentTrigger != null, "Sword combo 공격은 애니메이션 트리거가 필요합니다.");
             _vfxModule = _player.GetModule<VfxModule>();
+            
+            _damageCaster = GetComponentInChildren<AbstractDamageCaster>();
+            Debug.Assert(_damageCaster != null, $"데미지 캐스터가 있어야 정상적으로 데미지를 줄 수 있습니다. : {gameObject}");
+            _damageCaster.InitCaster(skillModule.Owner); //해당 오너로 캐스터를 초기화(오너를 넣어줘야 차후에 딜러가 누군지 알 수 있습니다.
         }
 
         public override bool CanUseSkill(GameObject target = null)
@@ -58,6 +67,7 @@ namespace Players.SkillSystem
 
         private IEnumerator SwordComboCoroutine()
         {
+            _agentTrigger.OnDamageCast += HandleDamageHandle;
             _agentTrigger.OnAnimationEnd += HandleAnimationEnd;
             
             AnimationCurve comboCurve = comboCurves[ComboCounter];
@@ -74,7 +84,23 @@ namespace Players.SkillSystem
                 yield return null;
             }
             _movement.CanManualMove = true; //수동 조작모드로 변경.
+            _agentTrigger.OnDamageCast -= HandleDamageHandle;
             _agentTrigger.OnAnimationEnd -= HandleAnimationEnd;
+        }
+
+        private void HandleDamageHandle()
+        {
+            Vector3 position = _damageCaster.transform.position;
+            bool isHit = _damageCaster.CastDamage(position, transform.forward, SkillData);
+            if (isHit)
+            {
+                var slash = CreateEvents.ShowPoolingVfx.InitData(
+                    slashVfxItem, _damageCaster.LastHitPosition, Quaternion.identity);
+                _skillModule.CreateChannel.RaiseEvent(slash);
+                var impact = CreateEvents.ShowPoolingVfx.InitData(
+                    impactVfxItem, _damageCaster.LastHitPosition, Quaternion.identity);
+                _skillModule.CreateChannel.RaiseEvent(impact);
+            }
         }
 
         private void HandleAnimationEnd() => StopSkill();
