@@ -1,6 +1,7 @@
 using System.Collections;
 using Agents;
 using CombatSystem;
+using CoreSystem;
 using GGMLib.AnimationSystem;
 using UnityEngine;
 
@@ -12,7 +13,9 @@ namespace Players.SkillSystem
         [SerializeField] private AnimationCurve rollingCurve;
         [SerializeField] private float speed = 5f;
         [SerializeField] private float duration = 0.5f;
+        [SerializeField] private AssetNameSO dashEffect;
 
+        private VfxModule _vfxModule;
         private AgentTrigger _trigger;
 
         public override void InitializeSkill(ISkillModule skillModule)
@@ -20,6 +23,7 @@ namespace Players.SkillSystem
             base.InitializeSkill(skillModule);
             _trigger = _player.GetModule<AgentTrigger>();
             Debug.Assert(_trigger != null, "롤링 스킬은 애니메이션 트리거가 필요합니다.");
+            _vfxModule = _player.GetModule<VfxModule>();
         }
 
         public override bool CanUseSkill(GameObject target = null)
@@ -34,6 +38,7 @@ namespace Players.SkillSystem
             worldPosition.y = _player.transform.position.y;
             Vector3 direction = (worldPosition - _player.transform.position).normalized;
             _movement.RotateTo(direction);
+            _vfxModule.PlayVfx(dashEffect.AssetHash);
             StartCoroutine(RollingCoroutine());
         }
 
@@ -45,7 +50,6 @@ namespace Players.SkillSystem
             float currentDuration = 0;
             Vector3 forward = _player.transform.forward;
             _movement.CanManualMove = false;
-
             while (IsUsing)
             {
                 float percent = currentDuration / duration;
