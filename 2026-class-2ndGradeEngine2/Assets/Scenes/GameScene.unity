@@ -271,6 +271,66 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe73b89e3ebc45cf95a4df7c197a2541, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemies.EnemySkillModule
+--- !u!1 &94739527
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 94739530}
+  - component: {fileID: 94739528}
+  - component: {fileID: 94739529}
+  m_Layer: 6
+  m_Name: HitFeedback
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &94739528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 94739527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82dd47a21b81486886f7dfb3082a6bcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FeedbackSystem_assembly::GGMLib.FeedbackSystem.FeedbackPlayer
+--- !u!114 &94739529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 94739527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c14fe108990e4d0098a335696338318e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FeedbackSystem_assembly::GGMLib.FeedbackSystem.BlinkFeedback
+  targetRenderer: {fileID: 5060619081153871911}
+  blinkDuration: 0.1
+  blinkIntensity: 0.2
+--- !u!4 &94739530
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 94739527}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 4.9399996, y: -0.09487, z: -10.43}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1121244408}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &144795387
 GameObject:
   m_ObjectHideFlags: 0
@@ -2302,6 +2362,7 @@ Transform:
   - {fileID: 72686990}
   - {fileID: 2126857364}
   - {fileID: 440155125}
+  - {fileID: 94739530}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!195 &1121244409
@@ -2340,7 +2401,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Enemies.CommonMeleeEnemy
   OnHit:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 94739528}
+        m_TargetAssemblyTypeName: GGMLib.FeedbackSystem.FeedbackPlayer, FeedbackSystem_assembly
+        m_MethodName: PlayerAllFeedback
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnDeath:
     m_PersistentCalls:
       m_Calls: []
@@ -2691,6 +2764,7 @@ Transform:
   - {fileID: 1259159600}
   - {fileID: 1173314216}
   - {fileID: 1777574190}
+  - {fileID: 2049653962}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1470330165
@@ -3717,6 +3791,66 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2049653961
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2049653962}
+  - component: {fileID: 2049653964}
+  - component: {fileID: 2049653963}
+  m_Layer: 6
+  m_Name: HitFeedback
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2049653962
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2049653961}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1470330164}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2049653963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2049653961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c14fe108990e4d0098a335696338318e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FeedbackSystem_assembly::GGMLib.FeedbackSystem.BlinkFeedback
+  targetRenderer: {fileID: 1578708241235008386}
+  blinkDuration: 0.1
+  blinkIntensity: 0.2
+--- !u!114 &2049653964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2049653961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82dd47a21b81486886f7dfb3082a6bcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: FeedbackSystem_assembly::GGMLib.FeedbackSystem.FeedbackPlayer
 --- !u!1001 &2080778189
 PrefabInstance:
   m_ObjectHideFlags: 0

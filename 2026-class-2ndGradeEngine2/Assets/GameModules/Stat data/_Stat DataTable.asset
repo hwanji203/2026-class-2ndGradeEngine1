@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1eb172cf9859414e8ac6c23370c86647, type: 3}
+  m_Name: _Stat DataTable
+  m_EditorClassIdentifier: DatabaseSystem_assembly::GGMLib.DatabaseSystem.Runtime.DataTableSO
+  tableName: Stats
+  assets:
+  - {fileID: 11400000, guid: 5f8319527b273cf468b33a60c66f5920, type: 2}
+  - {fileID: 11400000, guid: b4dc65c395b837b4998cdb4e7719003f, type: 2}
+  - {fileID: 11400000, guid: c16b3a7b555654140971154471d964d3, type: 2}
+  - {fileID: 11400000, guid: b52998bfc28593647be834bbce9ea371, type: 2}

@@ -14,6 +14,7 @@ namespace Enemies.BT.Actions
         [SerializeReference] public BlackboardVariable<AbstractEnemy> Enemy;
 
         private AgentTrigger _agentTrigger;
+        private IRenderer _agentRenderer;
         private bool _isAnimationEnd;
         
         protected override Status OnStart()
@@ -23,6 +24,7 @@ namespace Enemies.BT.Actions
             
             _isAnimationEnd = false;
             _agentTrigger = Enemy.Value.Trigger;
+            _agentRenderer = Enemy.Value.AgentRenderer;
             _agentTrigger.OnAnimationEnd += HandleAnimationEnd;
             return Status.Running;
         }
@@ -38,7 +40,11 @@ namespace Enemies.BT.Actions
                 _agentTrigger.OnAnimationEnd -= HandleAnimationEnd;
         }
 
-        private void HandleAnimationEnd() => _isAnimationEnd = true;
+        private void HandleAnimationEnd()
+        {
+            if (_agentRenderer.Animator.IsInTransition(0)) return;
+            _isAnimationEnd = true;
+        }
     }
 }
 

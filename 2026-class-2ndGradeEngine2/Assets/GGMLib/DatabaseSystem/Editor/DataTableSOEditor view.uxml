@@ -1,0 +1,10 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/GGMLib/DatabaseSystem/Editor/DataTableSOEditor%20style.uss?fileID=7433441132597879392&amp;guid=700f12d36cbd08d45be7f356772e6611&amp;type=3#DataTableSOEditor style"/>
+    <ui:VisualElement name="validate-section" class="validate-section">
+        <ui:VisualElement name="separator" class="separator"/>
+        <ui:Button name="validate-button" text="검증하기" class="validate-button"/>
+        <ui:ScrollView name="result-scroll" vertical-scroller-visibility="Auto" class="result-scroll">
+            <ui:Label name="result-label" class="result-label"/>
+        </ui:ScrollView>
+    </ui:VisualElement>
+</ui:UXML>
