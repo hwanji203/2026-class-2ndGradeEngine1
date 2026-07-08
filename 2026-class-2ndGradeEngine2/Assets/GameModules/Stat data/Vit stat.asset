@@ -12,5 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ff3815a6424407a84e7263eaf690738, type: 3}
   m_Name: Vit stat
   m_EditorClassIdentifier: Assembly-CSharp::Agents.StatSystem.StatSO
-  <AssetIndex>k__BackingField: 0
-  <AssetName>k__BackingField: 
+  <AssetIndex>k__BackingField: 3
+  <AssetName>k__BackingField: Vital
+  <StatName>k__BackingField: "\uAC74\uAC15"
+  <StatIcon>k__BackingField: {fileID: 21300000, guid: 28d76ee7d34219f49b60660764550fd1, type: 3}
+  <DisplayName>k__BackingField: VIT
+  <IsPercent>k__BackingField: 0
+  baseValue: 10
+  minValue: 0
+  maxValue: 999
+  description: "\uCCB4\uB825\uC744 \uC99D\uAC00\uC2DC\uCF1C\uC8FC\uB294 \uC2A4\uD0EF"

@@ -12,5 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ff3815a6424407a84e7263eaf690738, type: 3}
   m_Name: MoveSpeed stat
   m_EditorClassIdentifier: Assembly-CSharp::Agents.StatSystem.StatSO
-  <AssetIndex>k__BackingField: 0
-  <AssetName>k__BackingField: 
+  <AssetIndex>k__BackingField: 1
+  <AssetName>k__BackingField: MoveSpeed
+  <StatName>k__BackingField: "\uC774\uB3D9\uC18D\uB3C4"
+  <StatIcon>k__BackingField: {fileID: 21300000, guid: 43a58f3bb8747b046a3a43c2b3cebb10, type: 3}
+  <DisplayName>k__BackingField: SPD
+  <IsPercent>k__BackingField: 0
+  baseValue: 3
+  minValue: 0.5
+  maxValue: 15
+  description: "\uCE90\uB9AD\uD130 \uC774\uB3D9\uC18D\uB3C4\uB97C \uD45C\uAE30\uD558\uB294
+    \uC2A4\uD0EF"
