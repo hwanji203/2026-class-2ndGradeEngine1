@@ -1,5 +1,6 @@
 using System;
 using Agents;
+using Agents.StatSystem;
 using CoreSystem;
 using GGMLib.ModuleSystem;
 using UnityEngine;
@@ -8,7 +9,7 @@ namespace Players
 {
     public class PlayerMovement : MonoBehaviour, IModule, IControlMovement, IAfterInitModule
     {
-        [SerializeField] private float moveSpeed = 8f;
+        [SerializeField] private StatSO moveSpeedStat;
         [SerializeField] private float gravity = -9.8f;
         [SerializeField] private float rotationSpeed = 8f;
         [SerializeField] private CharacterController controller;
@@ -20,6 +21,9 @@ namespace Players
         private ModuleOwner _owner;
         private Vector3 _manualVelocity; //수동 조작 속도.
         private VfxModule _vfxModule;
+        private IStatModule _statModule;
+        
+        private float _moveSpeed = 5f;
         
         public bool IsGround => controller.isGrounded;
         public Vector3 Velocity => _velocity;
@@ -30,12 +34,26 @@ namespace Players
         {
             _owner = owner;
             _vfxModule = _owner.GetModule<VfxModule>();
+            _statModule = _owner.GetModule<IStatModule>();
+            Debug.Assert(_statModule != null, $"플레이어 Movement는 StatModule이 필요합니다.");
         }
         
         public void AfterInit()
         {
             if(_vfxModule != null && footStepVfxName != null)
                 _vfxModule.StopVfx(footStepVfxName.AssetHash);
+
+            _moveSpeed = _statModule.SubscribeStat(moveSpeedStat.AssetIndex, HandleMoveSpeedChange, 1);
+        }
+
+        private void OnDestroy()
+        {
+            _statModule?.UnSubscribeStat(moveSpeedStat.AssetIndex, HandleMoveSpeedChange);
+        }
+
+        private void HandleMoveSpeedChange(StatSO stat, float currentValue, float prevValue)
+        {
+            _moveSpeed = currentValue;
         }
 
         public void SetMovementDirection(Vector2 inputDirection)
@@ -81,7 +99,7 @@ namespace Players
             else 
                 _velocity = _manualVelocity;
             
-            _velocity *= moveSpeed * Time.fixedDeltaTime;
+            _velocity *= _moveSpeed * Time.fixedDeltaTime;
 
             if (_velocity.sqrMagnitude > Mathf.Epsilon)
             {

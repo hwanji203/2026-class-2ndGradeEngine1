@@ -53,12 +53,12 @@ namespace Agents
                 ActionData.Attacker = damageData.Attacker;
             }
             
-            OnHit?.Invoke();
-
             if (Health != null)
             {
                 Health.ApplyDamage(damageData.DamageAmount);
             }
+
+            OnHit?.Invoke();
         }
     }
 }

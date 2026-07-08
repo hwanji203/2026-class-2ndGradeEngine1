@@ -44,11 +44,10 @@ namespace Agents.StatSystem
         public void AddModifier(object key, float value)
         {
             if (_modifyValueByKey.ContainsKey(key)) return; //1중첩만 허용
-
             float prevValue = Value;
             _modifyValueByKey.Add(key, value);
             _modifiedvalue += value;
-            
+
             TryInvokeValueChangedEvent(Value, prevValue);
         }
 
@@ -66,8 +65,10 @@ namespace Agents.StatSystem
 
         private void TryInvokeValueChangedEvent(float current, float prevValue)
         {
-            if (Mathf.Approximately(current, prevValue))
+            if (!Mathf.Approximately(current, prevValue))
+            {
                 OnValueChanged?.Invoke(this, current,prevValue);
+            }
         }
 
         public object Clone()

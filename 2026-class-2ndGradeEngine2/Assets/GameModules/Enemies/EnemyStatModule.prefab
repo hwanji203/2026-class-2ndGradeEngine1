@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8221552591289667143
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4776851935471273649}
+  - component: {fileID: 8241420204175679864}
+  m_Layer: 6
+  m_Name: EnemyStatModule
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4776851935471273649
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8221552591289667143}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 4.9399996, y: -0.09487, z: -10.43}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8241420204175679864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8221552591289667143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bca09b4caf7f43b0807b672e69fbe7bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemies.EnemyStatModule
+  statOverrides:
+  - <StatData>k__BackingField: {fileID: 11400000, guid: 0138ef05110dfa14e8d9d3b3eb204bfa, type: 2}
+    isUseOverride: 1
+    overrideValue: 1
+  - <StatData>k__BackingField: {fileID: 11400000, guid: 5f8319527b273cf468b33a60c66f5920, type: 2}
+    isUseOverride: 1
+    overrideValue: 1
+  - <StatData>k__BackingField: {fileID: 11400000, guid: b4dc65c395b837b4998cdb4e7719003f, type: 2}
+    isUseOverride: 1
+    overrideValue: 8
+  - <StatData>k__BackingField: {fileID: 11400000, guid: c16b3a7b555654140971154471d964d3, type: 2}
+    isUseOverride: 1
+    overrideValue: 5
+  - <StatData>k__BackingField: {fileID: 11400000, guid: b52998bfc28593647be834bbce9ea371, type: 2}
+    isUseOverride: 1
+    overrideValue: 5
+  strStat: {fileID: 11400000, guid: c16b3a7b555654140971154471d964d3, type: 2}
+  intStat: {fileID: 11400000, guid: 5f8319527b273cf468b33a60c66f5920, type: 2}

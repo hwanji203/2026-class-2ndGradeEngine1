@@ -34,6 +34,7 @@ namespace GGMLib.FeedbackSystem
 
         private IEnumerator BlickCoroutine()
         {
+            Debug.Log(blinkIntensity);
             _propertyBlock.SetFloat(_blinkValueHash, blinkIntensity);
             targetRenderer.SetPropertyBlock(_propertyBlock);
             yield return _waitTime;

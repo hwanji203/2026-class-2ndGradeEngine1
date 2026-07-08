@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Codice.Client.BaseCommands.BranchExplorer;
 using GGMLib.DatabaseSystem.Runtime;
-using UnityEditor.Compilation;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -15,7 +13,7 @@ namespace GGMLib.DatabaseSystem.Editor
     {
         [SerializeField] private VisualTreeAsset editorView;
         
-        public override UnityEngine.UIElements.VisualElement CreateInspectorGUI()
+        public override VisualElement CreateInspectorGUI()
         {
             VisualElement root = new VisualElement();
 
@@ -41,7 +39,7 @@ namespace GGMLib.DatabaseSystem.Editor
                 resultLabel.text = message;
                 resultLabel.RemoveFromClassList("result-label--pass");
                 resultLabel.RemoveFromClassList("result-label--fail");
-                resultLabel.AddToClassList(isPassed ? "result-label--pass" : "result-label-fail");
+                resultLabel.AddToClassList(isPassed ? "result-label--pass" : "result-label--fail");
                 resultScroll.style.display = DisplayStyle.Flex;
             };
             return root;
@@ -77,7 +75,7 @@ namespace GGMLib.DatabaseSystem.Editor
             {
                 if (!blankedHeaderPrinted)
                 {
-                    sb.AppendLine($"[비어있는 이름] {asset.AssetName}");
+                    sb.AppendLine($"[비어있는 이름] {asset.AssetIndex}");
                     blankedHeaderPrinted = true;
                 }
                 sb.AppendLine($"{asset.AssetIndex} : (이름공백)");
@@ -94,7 +92,7 @@ namespace GGMLib.DatabaseSystem.Editor
                 sb.AppendLine($"[중복 이름 {group.Key}]");
                 foreach (IndexedAsset asset in group)
                 {
-                    sb.AppendLine($"{asset.AssetName} : {asset.AssetName}");
+                    sb.AppendLine($"{asset.AssetIndex} : {asset.AssetName}");
                     failedAssets.Add(asset);
                 }
             }

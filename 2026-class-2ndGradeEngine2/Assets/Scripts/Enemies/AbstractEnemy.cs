@@ -56,7 +56,14 @@ namespace Enemies
         protected override void HandleHitEvent()
         {
             base.HandleHitEvent();
+            if (IsDead) return;
             StateChannel.SendEventMessage(EnemyState.HIT);
+        }
+
+        protected override void HandleDeath()
+        {
+            base.HandleDeath();
+            StateChannel.SendEventMessage(EnemyState.DEATH);
         }
         
         #region BT helpers

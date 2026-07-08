@@ -31,22 +31,20 @@ namespace CombatSystem
 
             if (isHit && hit.collider != null && hit.collider.TryGetComponent(out IDamageable damageable))
             {
-                Debug.Log($"<color=red>Hit. </color>: {hit.collider.name}");
-                float damageAmount = 5f; //기본 값으로
-                bool isCritical = false;
+                DamageData damageData = StatModule?.CalculateDamage(skillData) ?? new DamageData
+                {
+                    Attacker = CasterOwner,
+                    IsCritical = false,
+                    DamageAmount = skillData.baseDamage
+                };
+                
+                Debug.Log($"<color=red>Hit. </color>: {hit.collider.name} to damage <color=red>{damageData.DamageAmount}</color>");
 
                 LastHitPosition = hit.point;
                 LastHitNormal = hit.normal;
-                LastHitCritical = isCritical;
+                LastHitCritical = damageData.IsCritical;
                 
-                damageable.ApplyDamage(new DamageData
-                {
-                    DamageAmount = damageAmount * skillData.damageMultiplier,
-                    Attacker = CasterOwner,
-                    HitPoint = LastHitPosition,
-                    HitNormal = LastHitNormal,
-                    IsCritical = LastHitCritical,
-                });
+                damageable.ApplyDamage(damageData);
             }
             else
             {

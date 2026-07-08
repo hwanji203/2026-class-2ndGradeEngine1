@@ -1,3 +1,4 @@
+using Agents;
 using GGMLib.ModuleSystem;
 using UnityEngine;
 
@@ -11,12 +12,14 @@ namespace CombatSystem
         public Vector3 LastHitPosition { get; protected set; }
         public Vector3 LastHitNormal { get; protected set; }
         public bool LastHitCritical { get; protected set; }
+        public IStatModule StatModule { get; protected set; }
 
         public virtual void InitCaster(ModuleOwner owner)
         {
             CasterOwner = owner;
+            StatModule = CasterOwner.GetModule<IStatModule>();
         }
-        
+
         public abstract bool CastDamage(Vector3 position, Vector3 direction, SkillDataSO skillData);
     }
 }

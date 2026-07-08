@@ -1,18 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Agents.StatSystem;
+using CombatSystem;
 using GGMLib.ModuleSystem;
 using UnityEngine;
 
 namespace Agents
 {
-    public class AgentStatModule : MonoBehaviour, IModule
+    public abstract class AbstractAgentStatModule : MonoBehaviour, IModule, IStatModule
     {
         [SerializeField] private StatOverride[] statOverrides;
 
-        private ModuleOwner _owner;
-        private Dictionary<int, StatSO> _statDict;
-        public void Initialize(ModuleOwner owner)
+        protected ModuleOwner _owner;
+        protected Dictionary<int, StatSO> _statDict;
+        
+        public virtual void Initialize(ModuleOwner owner)
         {
             _owner = owner;
             _statDict = statOverrides.ToDictionary(stat => stat.StatData.AssetIndex, stat => stat.CreateStat());
@@ -53,12 +55,14 @@ namespace Agents
             return defaultValue;
         }
         
-        public void UnSubscribeStat(int statIndex, StatSO.ValueChangeHandler handler, float defaultValue)
+        public void UnSubscribeStat(int statIndex, StatSO.ValueChangeHandler handler)
         {
             if (_statDict.TryGetValue(statIndex, out StatSO stat))
             {
                 stat.OnValueChanged -= handler;
             }
         }
+
+        public abstract DamageData CalculateDamage(SkillDataSO skillData);
     }
 }

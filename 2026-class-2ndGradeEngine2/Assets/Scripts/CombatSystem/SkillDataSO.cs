@@ -2,6 +2,12 @@ using UnityEngine;
 
 namespace CombatSystem
 {
+    public enum SkillDamageType
+    {
+        Physical,
+        Magical,
+    }
+    
     [CreateAssetMenu(fileName = "Skill data", menuName = "Agent/Skill data", order = 25)]
     public class SkillDataSO : ScriptableObject
     {
@@ -10,6 +16,9 @@ namespace CombatSystem
         public float cooldown;
         //나중에 데미지 계수 등 여러가지 요소가 들어간다.
         public float skillRange = 1f;
+
+        public SkillDamageType damageType;
+        public float baseDamage = 1f;
         public float damageMultiplier = 1f;
     }
 }

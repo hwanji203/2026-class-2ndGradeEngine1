@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Agents;
+using Agents.StatSystem;
 using CombatSystem;
+using GGMLib.AnimationSystem;
 using GGMLib.EventChannelSystem;
 using GGMLib.ModuleSystem;
 using Players.FSM;
@@ -9,16 +12,23 @@ using UnityEngine;
 
 namespace Players
 {
-    public class PlayerSkillModule : MonoBehaviour, ISkillModule, IModule
+    public class PlayerSkillModule : MonoBehaviour, ISkillModule, IModule, IAfterInitModule
     {
         [field: SerializeField] public GameEventChannelSO CreateChannel { get; private set; }
+        
+        [SerializeField] private AnimParamSO attackSpeedParam;
+        [SerializeField] private StatSO attackSpeedStat;
         
         public ModuleOwner Owner { get; private set; }
         public PlayerController Player { get; private set; }
         public event Action OnCurrentSkillEnd;
 
+        private IStatModule _statModule;
+        private IRenderer _renderer;
+        
         private Dictionary<int, ISkill> _skillDict;
         private ISkill _currentSkill;
+        private float _speedMultiplier;
         
         public void Initialize(ModuleOwner owner)
         {
@@ -34,8 +44,19 @@ namespace Players
                 skill.InitializeSkill(this); //스킬들을 초기화
             }
 
+            _statModule = Owner.GetModule<IStatModule>();
+            Debug.Assert(_statModule != null, "StatModule은 플레이어 스킬에 필요합니다.");
+            _renderer = Owner.GetModule<IRenderer>();
+            Debug.Assert(_renderer != null, "Renderer는 플레이어 스킬에 필요합니다.");
+        }
+
+        public void AfterInit()
+        {
             Player.PlayerInput.OnAttackKeyPressed += HandleAttackKeyPress; //기본공격은 이걸로 바인딩
             Player.PlayerInput.OnSlideKeyPressed += HandleSlideKeyPress;
+
+            _speedMultiplier = _statModule.SubscribeStat(attackSpeedStat.AssetIndex, HandleAttackSpeed, 1f);
+            _renderer.Animator.SetFloat(attackSpeedParam.ParamHash, _speedMultiplier);
         }
 
         private void OnDestroy()
@@ -45,6 +66,14 @@ namespace Players
                 Player.PlayerInput.OnAttackKeyPressed -= HandleAttackKeyPress; //기본공격은 이걸로 바인딩
                 Player.PlayerInput.OnSlideKeyPressed -= HandleSlideKeyPress;                
             }
+            
+            _statModule?.UnSubscribeStat(attackSpeedStat.AssetIndex, HandleAttackSpeed);
+        }
+
+        private void HandleAttackSpeed(StatSO stat, float currentValue, float prevValue)
+        {
+            _speedMultiplier = currentValue;
+            _renderer.Animator.SetFloat(attackSpeedParam.ParamHash, _speedMultiplier);
         }
 
         private void HandleSlideKeyPress()
