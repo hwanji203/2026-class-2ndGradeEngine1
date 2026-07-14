@@ -29,6 +29,7 @@ namespace Enemies
         public int CurrentWayPointIndex { get; set; } = -1; //임시코드
         
         [SerializeField] private bool canDrawDebug = false;
+        [SerializeField] private CapsuleCollider capsuleCollider;
         
         protected override void InitializeComponents()
         {
@@ -63,6 +64,13 @@ namespace Enemies
         protected override void HandleDeath()
         {
             base.HandleDeath();
+
+            Collider[] bodyColliders = GetComponents<Collider>();
+            foreach (Collider c in bodyColliders)
+            {
+                c.enabled = false;
+            }
+            
             StateChannel.SendEventMessage(EnemyState.DEATH);
         }
         

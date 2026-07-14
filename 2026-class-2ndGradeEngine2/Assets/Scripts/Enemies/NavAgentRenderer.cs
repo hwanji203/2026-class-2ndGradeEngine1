@@ -99,7 +99,7 @@ namespace Enemies
 
         private void SynchronizeAnimationWithNavMeshAgent()
         {
-            if (_navAgent == null) return;
+            if (_navAgent == null || !_navAgent.isOnNavMesh) return;
             
             Vector3 worldDeltaPosition = _navAgent.nextPosition - _owner.transform.position;
             worldDeltaPosition.y = 0f;
@@ -139,7 +139,7 @@ namespace Enemies
         
         private void ForceRotationControl()
         {
-            if (!forceRotation || _navAgent == null || _navMovement.IsArrived) return;
+            if (!forceRotation || _navAgent == null || !_navAgent.isOnNavMesh || _navMovement.IsArrived) return;
 
             // steeringTarget는 상황에 따라 현재 위치와 매우 가까울 수 있어 desiredVelocity로 fallback.
             Vector3 desiredDirection = _navAgent.steeringTarget - _owner.transform.position;

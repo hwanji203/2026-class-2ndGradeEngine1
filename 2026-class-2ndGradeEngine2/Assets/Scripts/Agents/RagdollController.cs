@@ -9,7 +9,7 @@ namespace Agents
     public class RagdollController : MonoBehaviour, IModule
     {
         [SerializeField] private float defaultForce = 500f;
-
+        
         private Rigidbody[] _ragdollRigidbodies;
         private Collider[] _ragdollColliders;
         private IRenderer _renderer;

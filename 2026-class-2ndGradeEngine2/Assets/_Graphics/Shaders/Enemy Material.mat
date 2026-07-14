@@ -72,7 +72,11 @@ Material:
     m_Ints: []
     m_Floats:
     - _BlinkValue: 0
+    - _DissolveEdgeWidth: 0.05
+    - _DissolveHeight: -1.1
+    - _IsDissolve: 0
     - _MetalicValue: 0
+    - _ModelHeight: 1.84486
     - _NormalWeight: 0
     - _QueueControl: 0
     - _QueueOffset: 0
@@ -80,6 +84,7 @@ Material:
     m_Colors:
     - _BlinkColor: {r: 0.645283, g: 0.645283, b: 0.645283, a: 1}
     - _BlinkValue: {r: 0, g: 0, b: 0, a: 1}
+    - _DissolveColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
